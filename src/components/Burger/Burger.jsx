@@ -11,20 +11,21 @@ const BurgerContainer = styled.div`
   text-align: center;
   font-weight: bold;
   font-size: 1.2em;
+  overflow-y: scroll;
   
   @media (min-width: 500px) and (min-height: 400px) {
+    width: 250px;
+    height: 200px;
+  }
+  
+  @media (min-width: 500px) and (min-height: 401px) {
     width: 350px;
     height: 300px;
   }
   
-  @media (min-width: 500px) and (min-height: 401px) {
-    width: 450px;
-    height: 400px;
-  }
-  
   @media (min-width: 1000px) and (min-height: 700px) {
-    width: 700px;
-    height: 600px;
+    width: 500px;
+    height: 380px;
   }
 `;
 
