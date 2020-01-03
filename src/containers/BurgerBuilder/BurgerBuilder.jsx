@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import BuildControls from "../../components/BuildControls";
 import Burger from "../../components/Burger/Burger";
 import Aux from '../../components/Hoc/index';
-import Modal from "../../components/Modal";
+import Modal from "../../components/UI/Modal";
 import OrderSummary from "../../components/OrderSummary";
 
 const INGREDIENT_PRICES = {
@@ -16,12 +16,13 @@ const BurgerBuilder = () => {
     const [ burgerState, setBurgerState ] = useState({
         ingredients: {
             bacon: 0,
-            cheese: 1,
-            meat: 3,
+            cheese: 0,
+            meat: 0,
             salad: 0,
         },
-        price: 54,
-        purchasable: true,
+        price: 4,
+        purchasable: false,
+        purchasing: false,
     });
     const [ buttonControls, setButtonControls ] = useState({
         bacon: !!burgerState.ingredients.bacon,
@@ -29,6 +30,15 @@ const BurgerBuilder = () => {
         meat: !!burgerState.ingredients.meat,
         salad: !!burgerState.ingredients.salad,
     });
+    const purchase = () => {
+        setBurgerState({ ...burgerState, purchasing: true });
+    };
+    const cancelPurchase = () => {
+        setBurgerState({ ...burgerState, purchasing: false })
+    };
+    const continuePurchase = () => (
+        alert('Purchased!')
+    );
     const getPurchaseState = (ingredients) => {
         const sum = Object.keys(ingredients).map(key => (
             ingredients[key]
@@ -69,8 +79,13 @@ const BurgerBuilder = () => {
     return (
         <Aux>
             <Burger ingredients={burgerState.ingredients} />
-            <Modal>
-                <OrderSummary ingredients={burgerState.ingredients} />
+            <Modal show={burgerState.purchasing} onCancel={cancelPurchase}>
+                <OrderSummary
+                    ingredients={burgerState.ingredients}
+                    onCancel={cancelPurchase}
+                    onContinue={continuePurchase}
+                    price={burgerState.price}
+                />
             </Modal>
             <BuildControls
                 addIngredient={addIngredient}
@@ -78,6 +93,7 @@ const BurgerBuilder = () => {
                 buttonControls={buttonControls}
                 price={burgerState.price}
                 purchasable={burgerState.purchasable}
+                purchase={purchase}
             />
         </Aux>
     );

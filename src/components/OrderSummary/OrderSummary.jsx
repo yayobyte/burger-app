@@ -1,9 +1,10 @@
 import React from 'react';
 import Aux from '../Hoc/index'
+import Button from '../UI/Button'
 
-const OrderSummary = ({ ingredients }) => {
+const OrderSummary = ({ ingredients, onCancel, onContinue, price }) => {
     const ingredientsSummary = Object.keys(ingredients).map(item => (
-        <div><span>{item}</span>: {ingredients[item]}</div>
+        <li key={item}><span>{item.toUpperCase()}</span>: {ingredients[item]}</li>
     ));
     return (
         <Aux>
@@ -12,6 +13,10 @@ const OrderSummary = ({ ingredients }) => {
             <ul>
                 {ingredientsSummary}
             </ul>
+            <p><strong>Total Price: ${price.toFixed(2)}</strong></p>
+            <p>Continue to checkout?</p>
+            <Button className='danger' click={onCancel}>Cancel</Button>
+            <Button className='success' click={onContinue}>Continue</Button>
         </Aux>
     );
 };

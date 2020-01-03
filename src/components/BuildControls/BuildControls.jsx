@@ -68,7 +68,9 @@ const BuildControlsContainer = styled.div`
     }
 `;
 
-const BuildControls = ({ addIngredient, deleteIngredient, buttonControls, price, purchasable }) => (
+const BuildControls = ({
+    addIngredient, deleteIngredient, buttonControls, price, purchasable, purchase
+}) => (
     <BuildControlsContainer>
         <p className="price">Price: <strong>${price.toFixed(2)}</strong></p>
         {controls.map((value) => (
@@ -80,7 +82,11 @@ const BuildControls = ({ addIngredient, deleteIngredient, buttonControls, price,
                 disabledButton={!buttonControls[value.type]}
             />
         ))}
-        <button className="OrderButton" disabled={!purchasable}>ORDER NOW</button>
+        <button
+            className="OrderButton"
+            disabled={!purchasable}
+            onClick={purchase}
+        >ORDER NOW</button>
     </BuildControlsContainer>
 );
 
