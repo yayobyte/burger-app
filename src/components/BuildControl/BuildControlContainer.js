@@ -11,7 +11,7 @@ const BuildControlContainer = styled.div`
     font: inherit;
     padding: 5px;
     margin: 0 5px;
-    width: 80px;
+    width: 40px;
     border: 1px solid  #AA6817;
     cursor: pointer;
     outline: none;
@@ -35,6 +35,7 @@ const BuildControlContainer = styled.div`
     font-weight: bold;
     width: 80px;
     text-transform: capitalize;
+    color: white;
   }
 
   .less {  
