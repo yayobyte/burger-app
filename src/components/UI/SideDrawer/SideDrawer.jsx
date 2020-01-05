@@ -20,12 +20,12 @@ const SideDrawerContainer = styled.div`
   
   &.open {
     transform: translateX(0);
+    box-shadow: 10px 10px 10px rgba(20,20,20,0.4);
   }
   
   &.close {
     transform: translateX(-100%);
   }
-
     
   .logo {
     height: 11%;

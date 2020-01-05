@@ -12,17 +12,26 @@ const Button = styled.button`
     margin: 10px;
     font-weight: bold;
     
-    &:first-of-type {
-        margin-left: 0;
-        padding-left: 0;
-    }
-    
     &.success {
         color: #5C9210;
+        border: 1px solid #5C9210;
+    }
+    
+    &.success:active {
+        color: #295F00;
+        border: 1px solid #295F00;
+        background-color: #DBFF8F;
     }
     
     &.danger {
         color: #944317;
+        border: 1px solid #944317;
+    }
+    
+    &.danger:active {
+        color: #480000;
+        border: 1px solid #480000;
+        background-color: #FFC296;
     }
 `;
 

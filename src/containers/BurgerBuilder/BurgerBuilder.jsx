@@ -37,7 +37,7 @@ const BurgerBuilder = () => {
         setBurgerState({ ...burgerState, purchasing: false })
     };
     const continuePurchase = () => (
-        alert('Purchased!')
+        0
     );
     const getPurchaseState = (ingredients) => {
         const sum = Object.keys(ingredients).map(key => (
