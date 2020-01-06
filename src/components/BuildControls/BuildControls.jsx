@@ -1,14 +1,11 @@
 import React from 'react';
 import styled from "styled-components";
 import BuildControl from "../BuildControl";
-import ingredientTypes from "../BurgerIngredient/ingredientTypes";
+import { ingredients } from "../BurgerIngredient/burgerComponents";
 
-const controls = [
-    { type: ingredientTypes.cheese },
-    { type: ingredientTypes.bacon },
-    { type: ingredientTypes.meat },
-    { type: ingredientTypes.salad },
-];
+const controls = Object.keys(ingredients).map(item => ({
+        type: item,
+    }));
 
 const BuildControlsContainer = styled.div`
     width: 100%;

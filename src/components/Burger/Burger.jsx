@@ -2,7 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../BurgerIngredient";
-import ingredientTypes from "../BurgerIngredient/ingredientTypes";
+import ingredientTypes from "../BurgerIngredient/burgerComponents";
 
 const BurgerContainer = styled.div`
   width: 100%;

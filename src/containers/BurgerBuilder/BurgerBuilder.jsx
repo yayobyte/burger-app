@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import instance from '../../server';
 import BuildControls from "../../components/BuildControls";
+import Spinner from "../../components/UI/Spinner/Spinner";
 import Burger from "../../components/Burger/Burger";
 import Aux from '../../components/Hoc/index';
 import Modal from "../../components/UI/Modal";
 import OrderSummary from "../../components/OrderSummary";
+import withErrorHandler from "../../components/Hoc/withErrorHandler";
 
 const INGREDIENT_PRICES = {
     bacon: 8,
@@ -15,14 +18,24 @@ const INGREDIENT_PRICES = {
 const BurgerBuilder = () => {
     const [ burgerState, setBurgerState ] = useState({
         ingredients: {
-            bacon: 0,
-            cheese: 0,
-            meat: 0,
-            salad: 0,
+            bacon: 1,
+            cheese: 1,
+            meat: 1,
+            salad: 1,
         },
-        price: 4,
-        purchasable: false,
+        price: 35,
+        customer: {
+            name: 'Yayo Gutierrez',
+            cellphoneNumber: '5412364222',
+            address: {
+                line1: 'Dubai',
+                line2: 'Silicon Oasis'
+            },
+        },
+        buttonControls: {},
+        purchasable: true,
         purchasing: false,
+        settingOrder: false,
     });
     const [ buttonControls, setButtonControls ] = useState({
         bacon: !!burgerState.ingredients.bacon,
@@ -36,9 +49,21 @@ const BurgerBuilder = () => {
     const cancelPurchase = () => {
         setBurgerState({ ...burgerState, purchasing: false })
     };
-    const continuePurchase = () => (
-        0
-    );
+    const continuePurchase = () => {
+        setBurgerState({ ...burgerState, settingOrder: true });
+        const { ingredients, price, customer } = burgerState;
+        const order = { ingredients, price, customer };
+        instance.post('/orders.json', order)
+            .then((response) => {
+                console.log('response: ',response);
+            })
+            .catch((error) => {
+                console.log('error', error);
+            })
+            .finally(() => {
+                setBurgerState({ ...burgerState, settingOrder: false, purchasing: false });
+            });
+    };
     const getPurchaseState = (ingredients) => {
         const sum = Object.keys(ingredients).map(key => (
             ingredients[key]
@@ -78,14 +103,18 @@ const BurgerBuilder = () => {
     };
     return (
         <Aux>
-            <Burger ingredients={burgerState.ingredients} />
+            <Burger ingredients={burgerState.ingredients}/>
             <Modal show={burgerState.purchasing} onCancel={cancelPurchase}>
-                <OrderSummary
+                {burgerState.settingOrder?
+                    <Spinner />
+                    :
+                    <OrderSummary
                     ingredients={burgerState.ingredients}
                     onCancel={cancelPurchase}
                     onContinue={continuePurchase}
                     price={burgerState.price}
-                />
+                    />
+                }
             </Modal>
             <BuildControls
                 addIngredient={addIngredient}
@@ -99,4 +128,4 @@ const BurgerBuilder = () => {
     );
 };
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder);

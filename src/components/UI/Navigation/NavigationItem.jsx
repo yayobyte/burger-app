@@ -43,7 +43,7 @@ const ListItem = styled.li`
 
 const NavigationItem = ({ children, link, active }) => (
     <ListItem>
-        <a href={link} className={active ? 'active' : ''} sele>
+        <a href={link} className={active ? 'active' : ''}>
             {children}
         </a>
     </ListItem>

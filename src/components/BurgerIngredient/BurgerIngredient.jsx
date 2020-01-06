@@ -6,21 +6,21 @@ import Meat from './Meat';
 import Cheese from "./Cheese";
 import Salad from "./Salad";
 import Bacon from "./Bacon";
-import ingredientTypes from "./ingredientTypes";
+import burgerComponents from "./burgerComponents";
 
 const BurgerIngredient = ({ type }) => {
     switch (type) {
-        case ingredientTypes.breadBottom:
+        case burgerComponents.breadBottom:
             return <BreadButton />;
-        case ingredientTypes.breadTop:
+        case burgerComponents.breadTop:
             return <BreadTop />;
-        case ingredientTypes.meat:
+        case burgerComponents.meat:
             return <Meat />;
-        case ingredientTypes.cheese:
+        case burgerComponents.cheese:
             return <Cheese />;
-        case ingredientTypes.salad:
+        case burgerComponents.salad:
             return <Salad />;
-        case ingredientTypes.bacon:
+        case burgerComponents.bacon:
             return <Bacon />;
         default:
             return <div />;
