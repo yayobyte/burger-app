@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import instance from '../../server';
 import BuildControls from "../../components/BuildControls";
 import Spinner from "../../components/UI/Spinner/Spinner";
@@ -13,16 +13,20 @@ const INGREDIENT_PRICES = {
     cheese: 5,
     salad: 3,
     meat: 15,
+    sauce: 2,
+};
+
+const INITIAL_INGREDIENTS = {
+    bacon: 1,
+    cheese: 1,
+    meat: 1,
+    salad: 1,
+    sauce: 2,
 };
 
 const BurgerBuilder = () => {
     const [ burgerState, setBurgerState ] = useState({
-        ingredients: {
-            bacon: 1,
-            cheese: 1,
-            meat: 1,
-            salad: 1,
-        },
+        ingredients: { ...INITIAL_INGREDIENTS },
         price: 35,
         customer: {
             name: 'Yayo Gutierrez',
@@ -32,16 +36,12 @@ const BurgerBuilder = () => {
                 line2: 'Silicon Oasis'
             },
         },
-        buttonControls: {},
+        buttonControls: Object.fromEntries(Object.entries(INITIAL_INGREDIENTS).map(
+            ([ key, value ]) => ([[key], !!value])
+        )),
         purchasable: true,
         purchasing: false,
         settingOrder: false,
-    });
-    const [ buttonControls, setButtonControls ] = useState({
-        bacon: !!burgerState.ingredients.bacon,
-        cheese: !!burgerState.ingredients.cheese,
-        meat: !!burgerState.ingredients.meat,
-        salad: !!burgerState.ingredients.salad,
     });
     const purchase = () => {
         setBurgerState({ ...burgerState, purchasing: true });
@@ -82,8 +82,11 @@ const BurgerBuilder = () => {
             ingredients: newIngredients,
             price: newPrice,
             purchasable: getPurchaseState(newIngredients),
+            buttonControls: {
+                ...burgerState.buttonControls,
+                [type] : true,
+            }
         };
-        setButtonControls({ ...buttonControls, [type] : true });
         setBurgerState(newBurgerState);
     };
     const deleteIngredient = (type) => {
@@ -91,15 +94,18 @@ const BurgerBuilder = () => {
         const newCount = ingredients[type] - 1;
         const newPrice = burgerState.price - INGREDIENT_PRICES[type];
         const newIngredients = { ...ingredients, [type] : newCount };
+        const ingredientTypeButtonControl = newIngredients[type] !== 0;
         const newBurgerState = {
             ...burgerState,
             ingredients: newIngredients,
             price: newPrice,
             purchasable: getPurchaseState(newIngredients),
+            buttonControls: {
+                ...burgerState.buttonControls,
+                [type] : ingredientTypeButtonControl,
+            },
         };
-        const ingredientTypeButtonControl = newIngredients[type] !== 0;
         setBurgerState(newBurgerState);
-        setButtonControls({ ...buttonControls, [type] : ingredientTypeButtonControl });
     };
     return (
         <Aux>
@@ -117,9 +123,10 @@ const BurgerBuilder = () => {
                 }
             </Modal>
             <BuildControls
+                ingredients={burgerState.ingredients}
                 addIngredient={addIngredient}
                 deleteIngredient={deleteIngredient}
-                buttonControls={buttonControls}
+                buttonControls={burgerState.buttonControls}
                 price={burgerState.price}
                 purchasable={burgerState.purchasable}
                 purchase={purchase}

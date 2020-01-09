@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
 import BuildControl from "../BuildControl";
-import { ingredients } from "../BurgerIngredient/burgerComponents";
 
-const controls = Object.keys(ingredients).map(item => ({
+const controls = (ingredients) => Object.keys(ingredients).map(item => ({
         type: item,
     }));
 
@@ -66,11 +65,11 @@ const BuildControlsContainer = styled.div`
 `;
 
 const BuildControls = ({
-    addIngredient, deleteIngredient, buttonControls, price, purchasable, purchase
+    addIngredient, deleteIngredient, buttonControls, price, purchasable, purchase, ingredients,
 }) => (
     <BuildControlsContainer>
         <p className="price">Price: <strong>${price.toFixed(2)}</strong></p>
-        {controls.map((value) => (
+        {controls(ingredients).map((value) => (
             <BuildControl
                 label={value.type}
                 key={value.type}
