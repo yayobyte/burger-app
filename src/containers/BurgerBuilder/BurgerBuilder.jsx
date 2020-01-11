@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import instance from '../../server';
+// import axios from '../../server';
 import BuildControls from "../../components/BuildControls";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import Burger from "../../components/Burger/Burger";
@@ -13,7 +13,6 @@ const INGREDIENT_PRICES = {
     cheese: 5,
     salad: 3,
     meat: 15,
-    sauce: 2,
 };
 
 const INITIAL_INGREDIENTS = {
@@ -21,10 +20,9 @@ const INITIAL_INGREDIENTS = {
     cheese: 1,
     meat: 1,
     salad: 1,
-    sauce: 2,
 };
 
-const BurgerBuilder = () => {
+const BurgerBuilder = ({ history }) => {
     const [ burgerState, setBurgerState ] = useState({
         ingredients: { ...INITIAL_INGREDIENTS },
         price: 35,
@@ -50,19 +48,13 @@ const BurgerBuilder = () => {
         setBurgerState({ ...burgerState, purchasing: false })
     };
     const continuePurchase = () => {
-        setBurgerState({ ...burgerState, settingOrder: true });
-        const { ingredients, price, customer } = burgerState;
-        const order = { ingredients, price, customer };
-        instance.post('/orders.json', order)
-            .then((response) => {
-                console.log('response: ',response);
-            })
-            .catch((error) => {
-                console.log('error', error);
-            })
-            .finally(() => {
-                setBurgerState({ ...burgerState, settingOrder: false, purchasing: false });
-            });
+        const queryParams = Object.keys(burgerState.ingredients).map( item => (
+            encodeURIComponent(item) + '=' + encodeURIComponent(burgerState.ingredients[item])
+        )).join('&');
+        history.push({
+            pathname: '/checkout',
+            search: '?' + queryParams,
+        });
     };
     const getPurchaseState = (ingredients) => {
         const sum = Object.keys(ingredients).map(key => (

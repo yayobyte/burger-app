@@ -11,15 +11,15 @@ const SummaryContainer = styled.div`
     }
 `;
 
-const CheckoutSummary = ({ ingredients }) => (
+const CheckoutSummary = ({ ingredients, placeOrder, cancelOrder }) => (
     <SummaryContainer>
         <h1>We hope this tastes well!</h1>
         <div className="content">
             <Burger ingredients={ingredients}/>
         </div>
-        <hr />
-        <Button className="danger" click={() => (1)} >CANCEL</Button>
-        <Button className="success" click={() => (1)} >CONTINUE</Button>
+        <hr/>
+        <Button className="danger" click={cancelOrder}>CANCEL</Button>
+        <Button className="success" click={placeOrder}>CONTINUE</Button>
     </SummaryContainer>
 );
 
