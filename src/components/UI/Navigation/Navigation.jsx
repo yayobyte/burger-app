@@ -1,6 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
 import NavigationItem from "./NavigationItem";
+import Router from 'react-router-dom';
 
 const UnorderedList = styled.ul`
     margin: 0;
@@ -18,8 +19,8 @@ const UnorderedList = styled.ul`
 
 const Navigation = () => (
     <UnorderedList>
-        <NavigationItem link="/" active>Burger Builder</NavigationItem>
-        <NavigationItem link="/">Checkout</NavigationItem>
+        <NavigationItem link="/" exact>Burger Builder</NavigationItem>
+        <NavigationItem link="/orders">Orders</NavigationItem>
     </UnorderedList>
 );
 

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
+import { withRouter } from 'react-router-dom';
 import axios from '../../server';
 import Button from "../UI/Button/Button";
 import withErrorHandler from "../Hoc/withErrorHandler";
@@ -25,7 +26,7 @@ const ContactContainer = styled.div`
   }
 `;
 
-const ContactData = ({ ingredients }) => {
+const ContactData = ({ ingredients, history }) => {
     const [ contact, setContact ] = useState({
         customer : {
             name: '',
@@ -53,6 +54,7 @@ const ContactData = ({ ingredients }) => {
         axios.post('/orders.json', order)
             .then((response) => {
                 console.log('response: ',response);
+                history.push('/orders');
             })
             .catch((error) => {
                 console.log('error', error);
@@ -97,4 +99,4 @@ const ContactData = ({ ingredients }) => {
     )
 };
 
-export default withErrorHandler(ContactData);
+export default withErrorHandler(withRouter(ContactData));

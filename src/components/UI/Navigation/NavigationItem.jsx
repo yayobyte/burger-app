@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const ListItem = styled.li`
@@ -15,7 +16,7 @@ const ListItem = styled.li`
     display: block;
   }
   
-  a:hover, a.active {
+  a:hover, a.Active {
     color: #40A4C8;
   } 
   
@@ -33,7 +34,7 @@ const ListItem = styled.li`
         border-bottom: 4px solid transparent;
       }
       
-      a:hover, a.active {
+      a:hover, a.Active {
         background-color: #8F5C2C;
         border-bottom: 4px solid #40A4C8;
         color: white;
@@ -41,11 +42,11 @@ const ListItem = styled.li`
   }
 `;
 
-const NavigationItem = ({ children, link, active }) => (
+const NavigationItem = ({ children, link, exact }) => (
     <ListItem>
-        <a href={link} className={active ? 'active' : ''}>
+        <NavLink to={link} activeClassName="Active" exact={exact}>
             {children}
-        </a>
+        </NavLink>
     </ListItem>
 );
 
