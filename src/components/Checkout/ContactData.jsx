@@ -5,6 +5,7 @@ import axios from '../../server';
 import Button from "../UI/Button/Button";
 import withErrorHandler from "../Hoc/withErrorHandler";
 import Spinner from "../UI/Spinner/Spinner";
+import Input from "../UI/Input";
 
 const ContactContainer = styled.div`
   margin: 20px auto;
@@ -15,13 +16,7 @@ const ContactContainer = styled.div`
   padding: 10px;
   box-sizing: border-box;
   
-  input {
-    display: block;
-    margin: 10px auto;
-    padding: 5px;
-  }
-  
-  @media(min-width: 500px) {
+  @media(max-width: 500px) {
     width: 100%;
   }
 `;
@@ -71,26 +66,36 @@ const ContactData = ({ ingredients, history }) => {
                 :
                 <>
                     <h3> Enter your contact details</h3>
-                    <input
-                        name="name"
-                        placeholder="Input your name"
-                        onChange={(target) => setValue(target, 'name')}
-                    />
-                    <input
-                        name="email"
-                        placeholder="Input your email"
-                        onChange={(target) => setValue(target, 'email')}
-                    />
-                    <input
-                        name="street"
-                        placeholder="Input your street"
-                        onChange={(target) => setValue(target, 'street')}
-                    />
-                    <input
-                        name="postCode"
-                        placeholder="Input your postal code"
-                        onChange={(target) => setValue(target, 'postCode')}
-                    />
+                    <form>
+                        <Input
+                            inputType="input"
+                            type="text"
+                            name="name"
+                            placeholder="Input your name"
+                            onChange={(target) => setValue(target, 'name')}
+                        />
+                        <Input
+                            inputType="input"
+                            type="email"
+                            name="email"
+                            placeholder="Input your email"
+                            onChange={(target) => setValue(target, 'email')}
+                        />
+                        <Input
+                            inputType="input"
+                            type="text"
+                            name="street"
+                            placeholder="Input your street"
+                            onChange={(target) => setValue(target, 'street')}
+                        />
+                        <Input
+                            inputType="input"
+                            type="text"
+                            name="postCode"
+                            placeholder="Input your postal code"
+                            onChange={(target) => setValue(target, 'postCode')}
+                        />
+                    </form>
                     <hr/>
                     <Button className="success" click={order} >Order</Button>
             </>

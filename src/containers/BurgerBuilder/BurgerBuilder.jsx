@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import axios from '../../server';
 import BuildControls from "../../components/BuildControls";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import Burger from "../../components/Burger/Burger";
