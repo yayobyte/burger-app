@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import { withRouter } from 'react-router-dom';
 import axios from '../../server';
@@ -23,27 +23,73 @@ const ContactContainer = styled.div`
 
 const ContactData = ({ ingredients, history }) => {
     const [ contact, setContact ] = useState({
-        customer : {
-            name: '',
-            email: '',
-            street: '',
-            postCode: '',
+        orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your Name',
+                },
+                value: '',
+            },
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Street',
+                },
+                value: '',
+            },
+            zipCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'ZIP',
+                },
+                value: '',
+            },
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your Country',
+                },
+                value: '',
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    placeholder: 'Your Email',
+                },
+                value: '',
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'fastest', displayValue: 'Fastest'},
+                        {value: 'cheapest', displayValue: 'Cheapest'}
+                    ],
+                },
+                value: 'fastest',
+            },
         },
         loading: false,
     });
     const setValue = ({ target: { value }}, key) => {
-        const newCustomer = {
-            ...contact,
-            customer : {
-                ...contact.customer,
-                [key] : value,
-            },
-        };
+        const newCustomer = { ...contact };
+        newCustomer.orderForm[key].value = value;
         setContact(newCustomer);
     };
     const order = () => {
         setContact({ ...contact, loading: true });
-        const { customer } = contact;
+        const customer = Object.keys(contact.orderForm).map(item => (
+            {[item]: contact.orderForm[item].value}
+        )).reduce((obj, item) => ({
+                ...obj,
+                ...item,
+        }), {});
         // TODO: Calculate price
         const order = { ingredients, price: 52000 , customer };
         axios.post('/orders.json', order)
@@ -67,34 +113,18 @@ const ContactData = ({ ingredients, history }) => {
                 <>
                     <h3> Enter your contact details</h3>
                     <form>
-                        <Input
-                            inputType="input"
-                            type="text"
-                            name="name"
-                            placeholder="Input your name"
-                            onChange={(target) => setValue(target, 'name')}
-                        />
-                        <Input
-                            inputType="input"
-                            type="email"
-                            name="email"
-                            placeholder="Input your email"
-                            onChange={(target) => setValue(target, 'email')}
-                        />
-                        <Input
-                            inputType="input"
-                            type="text"
-                            name="street"
-                            placeholder="Input your street"
-                            onChange={(target) => setValue(target, 'street')}
-                        />
-                        <Input
-                            inputType="input"
-                            type="text"
-                            name="postCode"
-                            placeholder="Input your postal code"
-                            onChange={(target) => setValue(target, 'postCode')}
-                        />
+                        {
+                            Object.keys(contact.orderForm).map((item) => (
+                                <Input
+                                    key={item}
+                                    name={item}
+                                    type={contact.orderForm[item].elementType}
+                                    config={contact.orderForm[item].elementConfig}
+                                    value={contact.orderForm[item].value}
+                                    onChange={(target) => setValue(target, item)}
+                                />
+                            ))
+                        }
                     </form>
                     <hr/>
                     <Button className="success" click={order} >Order</Button>

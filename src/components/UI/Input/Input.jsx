@@ -29,22 +29,62 @@ const InputField = styled.div`
   }
 `;
 
-const HTMLInput = ({ inputType, ...props }) => {
-    switch (inputType) {
+const HTMLInput = ({ type, name, config, value, onChange }) => {
+    switch (type) {
         case "input":
-            return <input {...props} name={props.name} className="input-element"/>;
+            return <input
+                {...config}
+                name={name}
+                value={value}
+                className="input-element"
+                onChange={onChange}
+            />;
         case "textarea" :
-            return <textarea {...props} className="input-element"/>;
+            return <textarea
+                {...config}
+                name={name}
+                value={value}
+                className="input-element"
+                onChange={onChange}
+            />;
+        case "select":
+            return <select
+                name={name}
+                value={value}
+                onChange={onChange}
+                className="input-element"
+            >
+                {config && Object.keys(config.options).map(item => (
+                    <option
+                        value={config.options[item].value}
+                        key={item}
+                    >
+                        {config.options[item].displayValue}
+                    </option>
+                ))}
+            </select>;
         default:
-            return <input {...props} className="input-element"/>;
+            return <input
+                {...config}
+                name={name}
+                value={value}
+                className="input-element"
+                onChange={onChange}
+            />;
     }
 };
 
-const Input = ({ ...props }) => {
+const Input = ({ name, type, config, value, onChange }) => {
     return (
         <InputField>
-            <label htmlFor={props.name} />
-            <HTMLInput {...props} />
+            <label htmlFor={name} />
+            <HTMLInput
+                name={name}
+                type={type}
+                config={config}
+                value={value}
+                onChange={onChange}
+            />
         </InputField>
     )
 };

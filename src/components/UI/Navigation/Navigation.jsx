@@ -1,7 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
 import NavigationItem from "./NavigationItem";
-import Router from 'react-router-dom';
 
 const UnorderedList = styled.ul`
     margin: 0;
