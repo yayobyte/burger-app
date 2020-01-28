@@ -22,7 +22,7 @@ const ContactContainer = styled.div`
 `;
 
 const ContactData = ({ ingredients, history }) => {
-    const [ contact, setContact ] = useState({
+    const [ formState, setFormState ] = useState({
         orderForm: {
             name: {
                 elementType: 'input',
@@ -30,7 +30,14 @@ const ContactData = ({ ingredients, history }) => {
                     type: 'text',
                     placeholder: 'Your Name',
                 },
-                value: '',
+                validation: {
+                    required: true,
+                },
+                elementState: {
+                    value: '',
+                    valid: false,
+                    touched: false,
+                },
             },
             street: {
                 elementType: 'input',
@@ -38,7 +45,14 @@ const ContactData = ({ ingredients, history }) => {
                     type: 'text',
                     placeholder: 'Street',
                 },
-                value: '',
+                validation: {
+                    required: true,
+                },
+                elementState: {
+                    value: '',
+                    valid: false,
+                    touched: false,
+                },
             },
             zipCode: {
                 elementType: 'input',
@@ -46,7 +60,16 @@ const ContactData = ({ ingredients, history }) => {
                     type: 'text',
                     placeholder: 'ZIP',
                 },
-                value: '',
+                validation: {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5,
+                },
+                elementState: {
+                    value: '',
+                    valid: false,
+                    touched: false,
+                },
             },
             country: {
                 elementType: 'input',
@@ -54,7 +77,14 @@ const ContactData = ({ ingredients, history }) => {
                     type: 'text',
                     placeholder: 'Your Country',
                 },
-                value: '',
+                validation: {
+                    required: true,
+                },
+                elementState: {
+                    value: '',
+                    valid: false,
+                    touched: false,
+                },
             },
             email: {
                 elementType: 'input',
@@ -62,7 +92,14 @@ const ContactData = ({ ingredients, history }) => {
                     type: 'email',
                     placeholder: 'Your Email',
                 },
-                value: '',
+                validation: {
+                    required: true,
+                },
+                elementState: {
+                    value: '',
+                    valid: false,
+                    touched: false,
+                },
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -73,19 +110,56 @@ const ContactData = ({ ingredients, history }) => {
                     ],
                 },
                 value: 'fastest',
+                validation: {},
+                elementState: {
+                    value: '',
+                    valid: true,
+                    touched: false,
+                },
             },
         },
+        isValid: false,
         loading: false,
     });
+
+    const checkFormValidity = () => {
+        let validity = true;
+        Object.keys(formState.orderForm).forEach(key => {
+            validity = formState.orderForm[key].elementState.valid && validity
+        });
+        return validity;
+    };
+
+    const checkValidity = (value, rules) => {
+        let isValid = true;
+        const { required, minLength, maxLength } = rules;
+        if (required){
+            isValid = value.trim() !== '' && isValid;
+        }
+        if (minLength) {
+            isValid = value.length >= rules.minLength && isValid;
+        }
+        if (maxLength) {
+            isValid = value.length <= rules.maxLength && isValid;
+        }
+        return isValid;
+    };
+
     const setValue = ({ target: { value }}, key) => {
-        const newCustomer = { ...contact };
-        newCustomer.orderForm[key].value = value;
-        setContact(newCustomer);
+        const newFormState = { ...formState };
+        newFormState.orderForm[key].elementState = {
+            ...newFormState.orderForm[key].elementState,
+            valid : newFormState.orderForm[key].validation && checkValidity(value, newFormState.orderForm[key].validation),
+            touched: true,
+            value,
+        };
+        const isValid = checkFormValidity();
+        setFormState({ ...newFormState, isValid });
     };
     const order = () => {
-        setContact({ ...contact, loading: true });
-        const customer = Object.keys(contact.orderForm).map(item => (
-            {[item]: contact.orderForm[item].value}
+        setFormState({ ...formState, loading: true });
+        const customer = Object.keys(formState.orderForm).map(item => (
+            {[item]: formState.orderForm[item].value}
         )).reduce((obj, item) => ({
                 ...obj,
                 ...item,
@@ -101,10 +175,10 @@ const ContactData = ({ ingredients, history }) => {
                 console.log('error', error);
             })
             .finally(() => {
-                setContact({ ...contact, loading: false });
+                setFormState({ ...formState, loading: false });
             });
     };
-    const { loading } = contact;
+    const { loading } = formState;
     return (
         <ContactContainer>
             { loading ?
@@ -114,20 +188,20 @@ const ContactData = ({ ingredients, history }) => {
                     <h3> Enter your contact details</h3>
                     <form>
                         {
-                            Object.keys(contact.orderForm).map((item) => (
+                            Object.keys(formState.orderForm).map((item) => (
                                 <Input
                                     key={item}
                                     name={item}
-                                    type={contact.orderForm[item].elementType}
-                                    config={contact.orderForm[item].elementConfig}
-                                    value={contact.orderForm[item].value}
+                                    type={formState.orderForm[item].elementType}
+                                    config={formState.orderForm[item].elementConfig}
+                                    elementState={formState.orderForm[item].elementState}
                                     onChange={(target) => setValue(target, item)}
                                 />
                             ))
                         }
                     </form>
                     <hr/>
-                    <Button className="success" click={order} >Order</Button>
+                    <Button className="success" click={order} disabled={!formState.isValid}>Order</Button>
             </>
             }
         </ContactContainer>

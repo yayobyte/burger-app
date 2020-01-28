@@ -33,10 +33,16 @@ const Button = styled.button`
         border: 1px solid #480000;
         background-color: #FFC296;
     }
+    
+    &:disabled, &:disabled:active {
+      color: #D1D1D1;
+      border: 1px solid #D1D1D1;
+      cursor: none;
+    }
 `;
 
-export default ({ children, click, className }) => (
-    <Button onClick={click} className={className} >
+export default ({ children, click, className, disabled }) => (
+    <Button onClick={click} className={className} disabled={disabled}>
         {children}
     </Button>
 );

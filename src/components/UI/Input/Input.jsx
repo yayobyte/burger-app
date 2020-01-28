@@ -27,24 +27,37 @@ const InputField = styled.div`
     outline: none;
     background-color: #ccc;
   }
+  
+  .invalid {
+    border: 1px solid red;
+    background-color: #FDA49A;
+  }
+  
+  p.input-error {
+    color: red;
+    font-size: 0.7em;
+    text-align: left;
+    margin: 5px 0 0 0;
+    visibility: hidden;
+    
+  }
+  
+  p.show-error {
+    visibility: visible;
+  }
+  
 `;
 
-const HTMLInput = ({ type, name, config, value, onChange }) => {
+const HTMLInput = ({ type, name, config, onChange, elementState }) => {
+    const { value, touched, valid } = elementState;
+    const classes = ['input-element', !valid && touched ? 'invalid' : ''];
     switch (type) {
-        case "input":
-            return <input
-                {...config}
-                name={name}
-                value={value}
-                className="input-element"
-                onChange={onChange}
-            />;
         case "textarea" :
             return <textarea
                 {...config}
                 name={name}
                 value={value}
-                className="input-element"
+                className={classes.join(' ')}
                 onChange={onChange}
             />;
         case "select":
@@ -52,7 +65,7 @@ const HTMLInput = ({ type, name, config, value, onChange }) => {
                 name={name}
                 value={value}
                 onChange={onChange}
-                className="input-element"
+                className={classes.join(' ')}
             >
                 {config && Object.keys(config.options).map(item => (
                     <option
@@ -68,13 +81,20 @@ const HTMLInput = ({ type, name, config, value, onChange }) => {
                 {...config}
                 name={name}
                 value={value}
-                className="input-element"
+                className={classes.join(' ')}
                 onChange={onChange}
             />;
     }
 };
 
-const Input = ({ name, type, config, value, onChange }) => {
+const ErrorMessage = ({ valid, touched }) => {
+    const classes = ["input-error", (!valid && touched) ? "show-error" : ""];
+    return (
+        <p className={classes.join(" ")}>Please enter a valid input!</p>
+    )
+};
+
+const Input = ({ name, type, config, onChange, elementState }) => {
     return (
         <InputField>
             <label htmlFor={name} />
@@ -82,9 +102,10 @@ const Input = ({ name, type, config, value, onChange }) => {
                 name={name}
                 type={type}
                 config={config}
-                value={value}
                 onChange={onChange}
+                elementState={elementState}
             />
+            <ErrorMessage valid={elementState.valid} touched={elementState.touched} />
         </InputField>
     )
 };

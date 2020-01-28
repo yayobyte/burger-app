@@ -13,10 +13,6 @@ const OrderContainer = styled.div`
     font-weight: 600;
   }
   
-  ul > li {
-    text-transform: capitalize;
-  }
-  
   .price {
     text-align: center;
     margin: 8px auto;
