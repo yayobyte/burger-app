@@ -65,25 +65,31 @@ const BuildControlsContainer = styled.div`
 `;
 
 const BuildControls = ({
-    addIngredient, deleteIngredient, buttonControls, price, purchasable, purchase, ingredients,
-}) => (
-    <BuildControlsContainer>
-        <p className="price">Price: <strong>${price.toFixed(2)}</strong></p>
-        {controls(ingredients).map((value) => (
-            <BuildControl
-                label={value.type}
-                key={value.type}
-                addIngredient={() => addIngredient(value.type)}
-                deleteIngredient={() => deleteIngredient(value.type)}
-                disabledButton={!buttonControls[value.type]}
-            />
-        ))}
-        <button
-            className="OrderButton"
-            disabled={!purchasable}
-            onClick={purchase}
-        >ORDER NOW</button>
-    </BuildControlsContainer>
-);
+    addIngredient, deleteIngredient, price, purchasable, purchase, ingredients,
+}) => {
+    const buttonControls = Object.fromEntries(Object.entries(ingredients).map(
+        ([ key, value ]) => ([[key], !!value])
+    ));
+    return (
+        <BuildControlsContainer>
+            <p className="price">Price: <strong>${price.toFixed(2)}</strong></p>
+            {controls(ingredients).map((value) => (
+                <BuildControl
+                    label={value.type}
+                    key={value.type}
+                    addIngredient={() => addIngredient(value.type)}
+                    deleteIngredient={() => deleteIngredient(value.type)}
+                    disabledButton={!buttonControls[value.type]}
+                />
+            ))}
+            <button
+                className="OrderButton"
+                disabled={!purchasable}
+                onClick={purchase}
+            >ORDER NOW
+            </button>
+        </BuildControlsContainer>
+    );
+};
 
 export default BuildControls;

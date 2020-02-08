@@ -1,3 +1,3 @@
-import BurgerBuilder from "./BurgerBuilder";
+import BurgerBuilder from "./controller";
 
 export default BurgerBuilder;

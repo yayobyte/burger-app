@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import { withRouter } from 'react-router-dom';
 import axios from '../../server';
@@ -21,7 +21,7 @@ const ContactContainer = styled.div`
   }
 `;
 
-const ContactData = ({ ingredients, history }) => {
+const ContactData = ({ ingredients, history, price }) => {
     const [ formState, setFormState ] = useState({
         orderForm: {
             name: {
@@ -109,10 +109,9 @@ const ContactData = ({ ingredients, history }) => {
                         {value: 'cheapest', displayValue: 'Cheapest'}
                     ],
                 },
-                value: 'fastest',
                 validation: {},
                 elementState: {
-                    value: '',
+                    value: 'fastest',
                     valid: true,
                     touched: false,
                 },
@@ -159,13 +158,13 @@ const ContactData = ({ ingredients, history }) => {
     const order = () => {
         setFormState({ ...formState, loading: true });
         const customer = Object.keys(formState.orderForm).map(item => (
-            {[item]: formState.orderForm[item].value}
+            {[item]: formState.orderForm[item].elementState.value}
         )).reduce((obj, item) => ({
                 ...obj,
                 ...item,
         }), {});
-        // TODO: Calculate price
-        const order = { ingredients, price: 52000 , customer };
+        const order = { ingredients, price , customer };
+
         axios.post('/orders.json', order)
             .then((response) => {
                 console.log('response: ',response);

@@ -1,3 +1,3 @@
-import Checkout from "./Checkout";
+import Checkout from "./controller";
 
 export default Checkout;
