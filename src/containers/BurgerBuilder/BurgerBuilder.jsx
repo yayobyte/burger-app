@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import _ from "lodash";
 import BuildControls from "../../components/BuildControls";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import Burger from "../../components/Burger/Burger";
@@ -7,7 +8,8 @@ import Modal from "../../components/UI/Modal";
 import OrderSummary from "../../components/OrderSummary";
 
 const BurgerBuilder = ({
-    history, ingredients, addIngredient, deleteIngredient, totalPrice
+    addIngredient, deleteIngredient, initIngredients,
+    totalPrice, history, ingredients, loading,
 }) => {
     const [ burgerState, setBurgerState ] = useState({
         purchasing: false,
@@ -30,6 +32,11 @@ const BurgerBuilder = ({
         ), 0);
         return sum > 0;
     };
+    useEffect(() => {
+        if (_.isEmpty(ingredients)){
+            initIngredients();
+        }
+    }, [ingredients, initIngredients]);
     return (
         <Aux>
             <Burger ingredients={ingredients}/>
@@ -45,6 +52,7 @@ const BurgerBuilder = ({
                     />
                 }
             </Modal>
+            {loading ? <Spinner /> :
             <BuildControls
                 ingredients={ingredients}
                 addIngredient={addIngredient}
@@ -52,7 +60,7 @@ const BurgerBuilder = ({
                 price={totalPrice}
                 purchasable={getPurchaseState(ingredients)}
                 purchase={purchase}
-            />
+            />}
         </Aux>
     );
 };
