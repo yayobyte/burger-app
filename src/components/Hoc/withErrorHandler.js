@@ -2,7 +2,6 @@ import React, { useState, useEffect}  from 'react';
 import styled from "styled-components";
 import Hoc from "./Hoc";
 import Modal from "../UI/Modal";
-import instance from "../../server";
 import Button from "../UI/Button";
 
 const ErrorContainer = styled.div`
@@ -19,7 +18,7 @@ const ErrorContainer = styled.div`
     }
 `;
 
-const withErrorHandler = ( WrappedComponent ) => (
+const withErrorHandler = ( WrappedComponent, instance ) => (
     (props) => {
         const [ errorState, setErrorState ] = useState(null);
         useEffect(() => {

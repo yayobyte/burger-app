@@ -1,10 +1,10 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from '../actions/actionTypes.actions';
 
 const {
     ADD_INGREDIENT,
     REMOVE_INGREDIENT,
-    UNSET_LOADING,
-    SET_LOADING,
+    UNSET_INGREDIENTS_LOADING,
+    SET_INGREDIENTS_LOADING,
     SET_INGREDIENTS_SUCCESS,
     SET_INGREDIENTS_FAIL,
 } = actionTypes;
@@ -25,12 +25,12 @@ const INGREDIENT_PRICES = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_LOADING:
+        case SET_INGREDIENTS_LOADING:
             return {
                 ...state,
                 loading: true,
             };
-        case UNSET_LOADING:
+        case UNSET_INGREDIENTS_LOADING:
             return {
                 ...state,
                 loading: false,

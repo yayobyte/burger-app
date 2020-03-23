@@ -1,3 +1,4 @@
-import burgerBuilderReducer from "./burgerBuilder";
+import burgerBuilderReducer from "./burgerBuilder.reducer";
+import orderReducer from "./order.reducer";
 
-export { burgerBuilderReducer };
+export { burgerBuilderReducer, orderReducer };

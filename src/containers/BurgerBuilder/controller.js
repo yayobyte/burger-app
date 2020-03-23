@@ -1,11 +1,10 @@
 import * as actions from "../../store/actions/";
 import {connect} from "react-redux";
 import BurgerBuilder from "./BurgerBuilder";
-import withErrorHandler from "../../components/Hoc/withErrorHandler";
 
 const {addIngredient, removeIngredient, initIngredients } = actions;
 
-const mapStateToProps = ({ ingredients, totalPrice, error, loading }) => ({
+const mapStateToProps = ({ burgerBuilder: { ingredients, totalPrice, error, loading }}) => ({
     ingredients,
     totalPrice,
     error,
@@ -18,4 +17,4 @@ const mapDispatchToProps = (dispatch) => ({
     initIngredients: () => dispatch(initIngredients()),
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(BurgerBuilder));
+export default connect(mapStateToProps,mapDispatchToProps)(BurgerBuilder);

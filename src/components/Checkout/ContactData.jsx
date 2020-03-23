@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import { withRouter } from 'react-router-dom';
-import axios from '../../server';
+import instance from '../../server';
 import Button from "../UI/Button/Button";
 import withErrorHandler from "../Hoc/withErrorHandler";
 import Spinner from "../UI/Spinner/Spinner";
 import Input from "../UI/Input";
+import { connect } from "react-redux";
+import { purchaseBurger } from "../../store/actions";
 
 const ContactContainer = styled.div`
   margin: 20px auto;
@@ -21,7 +23,7 @@ const ContactContainer = styled.div`
   }
 `;
 
-const ContactData = ({ ingredients, history, price }) => {
+const ContactData = ({ ingredients, price, loading, purchaseBurger, history }) => {
     const [ formState, setFormState ] = useState({
         orderForm: {
             name: {
@@ -118,7 +120,6 @@ const ContactData = ({ ingredients, history, price }) => {
             },
         },
         isValid: false,
-        loading: false,
     });
 
     const checkFormValidity = () => {
@@ -156,7 +157,6 @@ const ContactData = ({ ingredients, history, price }) => {
         setFormState({ ...newFormState, isValid });
     };
     const order = () => {
-        setFormState({ ...formState, loading: true });
         const customer = Object.keys(formState.orderForm).map(item => (
             {[item]: formState.orderForm[item].elementState.value}
         )).reduce((obj, item) => ({
@@ -164,20 +164,9 @@ const ContactData = ({ ingredients, history, price }) => {
                 ...item,
         }), {});
         const order = { ingredients, price , customer };
-
-        axios.post('/orders.json', order)
-            .then((response) => {
-                console.log('response: ',response);
-                history.push('/orders');
-            })
-            .catch((error) => {
-                console.log('error', error);
-            })
-            .finally(() => {
-                setFormState({ ...formState, loading: false });
-            });
+        purchaseBurger(order);
+        history.push('/orders');
     };
-    const { loading } = formState;
     return (
         <ContactContainer>
             { loading ?
@@ -207,4 +196,15 @@ const ContactData = ({ ingredients, history, price }) => {
     )
 };
 
-export default withErrorHandler(withRouter(ContactData));
+export default connect(({ order: { loading }, burgerBuilder: { ingredients, totalPrice }}) => {
+    return {
+        loading: loading,
+        ingredients: ingredients,
+        price: totalPrice,
+    }
+},
+    (dispatch) => {
+        return {
+            purchaseBurger: (order) => dispatch(purchaseBurger(order))
+        }
+})(withErrorHandler(withRouter(ContactData), instance));

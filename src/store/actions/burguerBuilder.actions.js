@@ -1,13 +1,13 @@
-import axios from "../../server";
+import instance from "../../server";
 
 import {
     ADD_INGREDIENT,
     REMOVE_INGREDIENT,
-    SET_LOADING,
     SET_INGREDIENTS_FAIL,
     SET_INGREDIENTS_SUCCESS,
-    UNSET_LOADING,
-} from "./actionTypes";
+    SET_INGREDIENTS_LOADING,
+    UNSET_INGREDIENTS_LOADING,
+} from "./actionTypes.actions";
 
 export const addIngredient = (ingredientName) => ({
     type: ADD_INGREDIENT,
@@ -29,20 +29,18 @@ const setIngredientsFail = (error) => ({
     error: error,
 });
 
-const setLoading = () => ({
-    type: SET_LOADING,
-    loading: true,
+export const setLoading = () => ({
+    type: SET_INGREDIENTS_LOADING,
 });
 
-const unsetLoading = () => ({
-    type: UNSET_LOADING,
-    loading: false,
+export const unsetLoading = () => ({
+    type: UNSET_INGREDIENTS_LOADING,
 });
 
 export const initIngredients = () => {
     return dispatch => {
         dispatch(setLoading());
-        axios.get("config/ingredients.json")
+        instance.get("config/ingredients.json")
             .then(({ data }) => {
                 dispatch(setIngredientsSuccess(data))
             })
