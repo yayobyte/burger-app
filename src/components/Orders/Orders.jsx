@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Order from "./Order";
 import Spinner from "../UI/Spinner/Spinner";
-import instance from "../../server";
 
 const Orders = ({ loading, orders, getOrders }) => {
     useEffect(() => {

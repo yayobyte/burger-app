@@ -47,9 +47,6 @@ export default (state = initialState, action) => {
                 loading: true,
             });
         case GET_ORDERS_SUCCESS:
-            const newOrders = {
-                ...action.orders,
-            };
             return ({
                 ...state,
                 orders: action.orders,
