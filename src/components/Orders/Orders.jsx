@@ -3,21 +3,9 @@ import Order from "./Order";
 import Spinner from "../UI/Spinner/Spinner";
 import instance from "../../server";
 
-const Orders = () => {
-    const [ orders, setOrders ] = useState([]);
-    const [ loading, setLoading ] = useState(false);
+const Orders = ({ loading, orders, getOrders }) => {
     useEffect(() => {
-        setLoading(true);
-        instance.get('/orders.json')
-            .then(( { data } ) => {
-                setOrders(data);
-            })
-            .catch(({ message }) => {
-                console.log("Error: ",message)
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+        getOrders();
     }, []);
     return (
         loading ? <Spinner/>

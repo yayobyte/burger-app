@@ -2,10 +2,13 @@ import * as actions from "./actionTypes.actions";
 import instance from "../../server";
 
 const {
-    PURCHASE_BURGER_FAIL,
+    PURCHASE_BURGER_REQUEST,
     PURCHASE_BURGER_SUCCESS,
-    SET_PURCHASE_BURGER_LOADING,
-    UNSET_PURCHASE_BURGER_LOADING,
+    PURCHASE_BURGER_FAIL,
+    PURCHASE_INIT,
+    GET_ORDERS_REQUEST,
+    GET_ORDERS_SUCCESS,
+    GET_ORDERS_FAIL,
 } = actions;
 
 const purchaseBurgerSuccess = (id, order) =>  ({
@@ -19,26 +22,50 @@ const purchaseBurgerFail = (error) => ({
     error,
 });
 
-export const setLoading = () => ({
-    type: SET_PURCHASE_BURGER_LOADING,
-});
-
-export const unsetLoading = () => ({
-    type: UNSET_PURCHASE_BURGER_LOADING,
+const purchaseBurgerRequest = () => ({
+    type: PURCHASE_BURGER_REQUEST,
 });
 
 export const purchaseBurger = (orderData) => {
     return (dispatch => {
-        dispatch(setLoading());
+        dispatch(purchaseBurgerRequest());
         instance.post('/orders.json', orderData)
             .then(( { data } ) => {
                 dispatch(purchaseBurgerSuccess(data, orderData));
             })
             .catch((error) => {
                 dispatch(purchaseBurgerFail(error))
-            })
-            .finally(() => {
-                dispatch(unsetLoading());
             });
     })
 };
+
+export const purchaseInit = () => ({
+    type: PURCHASE_INIT,
+});
+
+const getOrdersReq = () => ({
+    type: GET_ORDERS_REQUEST,
+});
+
+const getOrdersSuc = (orders) => ({
+    type: GET_ORDERS_SUCCESS,
+    orders,
+});
+
+const getOrdersFail = (error) => ({
+    type: GET_ORDERS_FAIL,
+    error,
+});
+
+export const getOrders = () => {
+    return ((dispatch) => {
+        dispatch(getOrdersReq());
+        instance.get('/orders.json')
+            .then(( { data } ) => {
+                dispatch(getOrdersSuc(data))
+            })
+            .catch((error) => {
+                dispatch(getOrdersFail(error))
+            })
+    });
+}

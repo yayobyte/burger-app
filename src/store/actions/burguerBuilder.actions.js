@@ -3,10 +3,9 @@ import instance from "../../server";
 import {
     ADD_INGREDIENT,
     REMOVE_INGREDIENT,
-    SET_INGREDIENTS_FAIL,
-    SET_INGREDIENTS_SUCCESS,
-    SET_INGREDIENTS_LOADING,
-    UNSET_INGREDIENTS_LOADING,
+    GET_INGREDIENTS_REQUEST,
+    GET_INGREDIENTS_SUCCESS,
+    GET_INGREDIENTS_FAIL,
 } from "./actionTypes.actions";
 
 export const addIngredient = (ingredientName) => ({
@@ -20,35 +19,28 @@ export const removeIngredient = (ingredientName) => ({
 });
 
 const setIngredientsSuccess = (ingredients) => ({
-    type: SET_INGREDIENTS_SUCCESS,
+    type: GET_INGREDIENTS_SUCCESS,
     ingredients,
 });
 
 const setIngredientsFail = (error) => ({
-    type: SET_INGREDIENTS_FAIL,
+    type: GET_INGREDIENTS_FAIL,
     error: error,
 });
 
-export const setLoading = () => ({
-    type: SET_INGREDIENTS_LOADING,
-});
-
-export const unsetLoading = () => ({
-    type: UNSET_INGREDIENTS_LOADING,
+export const setIngredientsRequest = () => ({
+    type: GET_INGREDIENTS_REQUEST,
 });
 
 export const initIngredients = () => {
     return dispatch => {
-        dispatch(setLoading());
+        dispatch(setIngredientsRequest());
         instance.get("config/ingredients.json")
             .then(({ data }) => {
                 dispatch(setIngredientsSuccess(data))
             })
             .catch(() => {
                 dispatch(setIngredientsFail())
-            })
-            .finally(() => {
-                dispatch(unsetLoading())
             });
     }
 };

@@ -1,3 +1,3 @@
-import Orders from "./Orders";
+import Orders from "./controller";
 
 export default Orders;

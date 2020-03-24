@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Redirect } from 'react-router-dom';
 import CheckoutSummary from "./CheckoutSummary";
 import ContactData from "./ContactData";
 
 
-const Checkout = ({ history, match, ingredients, price }) => {
+const Checkout = ({ history, match, ingredients, price, purchaseInit, purchased }) => {
+    useEffect(() => {
+        purchaseInit();
+    }, []);
     const cancelCheckout = () => {
         history.goBack();
     };
@@ -12,6 +15,11 @@ const Checkout = ({ history, match, ingredients, price }) => {
         history.replace(match.path + '/contact-data' );
     };
     if (ingredients) {
+        if (purchased){
+            return (
+                <Redirect to="/" />
+            );
+        }
         return (
             <div>
                 <CheckoutSummary
