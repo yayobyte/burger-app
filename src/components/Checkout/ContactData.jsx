@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import { withRouter } from 'react-router-dom';
 import instance from '../../server';
-import Button from "../UI/Button/Button";
 import withErrorHandler from "../Hoc/withErrorHandler";
+import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
 import Input from "../UI/Input";
 import { connect } from "react-redux";
 import { purchaseBurger } from "../../store/actions";
+import { checkFieldValidity, checkFormValidity } from "./../../helpers/";
 
 const ContactContainer = styled.div`
   margin: 20px auto;
@@ -122,38 +123,15 @@ const ContactData = ({ ingredients, price, loading, purchaseBurger, history }) =
         isValid: false,
     });
 
-    const checkFormValidity = () => {
-        let validity = true;
-        Object.keys(formState.orderForm).forEach(key => {
-            validity = formState.orderForm[key].elementState.valid && validity
-        });
-        return validity;
-    };
-
-    const checkValidity = (value, rules) => {
-        let isValid = true;
-        const { required, minLength, maxLength } = rules;
-        if (required){
-            isValid = value.trim() !== '' && isValid;
-        }
-        if (minLength) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-        if (maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-        return isValid;
-    };
-
     const setValue = ({ target: { value }}, key) => {
         const newFormState = { ...formState };
         newFormState.orderForm[key].elementState = {
             ...newFormState.orderForm[key].elementState,
-            valid : newFormState.orderForm[key].validation && checkValidity(value, newFormState.orderForm[key].validation),
+            valid : newFormState.orderForm[key].validation && checkFieldValidity(value, newFormState.orderForm[key].validation),
             touched: true,
             value,
         };
-        const isValid = checkFormValidity();
+        const isValid = checkFormValidity(formState.orderForm);
         setFormState({ ...newFormState, isValid });
     };
     const order = () => {
@@ -190,7 +168,7 @@ const ContactData = ({ ingredients, price, loading, purchaseBurger, history }) =
                     </form>
                     <hr/>
                     <Button className="success" click={order} disabled={!formState.isValid}>Order</Button>
-            </>
+                </>
             }
         </ContactContainer>
     )

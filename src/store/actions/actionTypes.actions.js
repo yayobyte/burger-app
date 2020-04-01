@@ -14,3 +14,7 @@ export const GET_ORDERS_SUCCESS = 'GET_ORDERS_SUCCESS';
 export const GET_ORDERS_FAIL = 'GET_ORDERS_FAIL';
 
 export const PURCHASE_INIT = 'PURCHASE_INIT';
+
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';

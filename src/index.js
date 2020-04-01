@@ -7,12 +7,13 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { burgerBuilderReducer, orderReducer } from './store/reducers/';
+import { burgerBuilderReducer, orderReducer, authReducer } from './store/reducers/';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
     order: orderReducer,
+    auth: authReducer,
 });
 
 const store = createStore(

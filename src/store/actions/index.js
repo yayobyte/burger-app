@@ -9,3 +9,7 @@ export {
     purchaseInit,
     getOrders,
 } from "./order.actions";
+
+export {
+    login,
+} from "./auth.actions"
