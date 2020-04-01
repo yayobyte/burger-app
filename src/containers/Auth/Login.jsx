@@ -77,7 +77,7 @@ export default ({ login }) => {
                 :
                 <>
                     <h2>Login</h2>
-                    <p>Please do not use personal credentials<br />This form is for testing purposes only</p>
+                    <p>Powered by google firebase. Passwords will never be stored</p>
                     <form>
                         {
                             Object.keys(loginForm).map((item) => (
