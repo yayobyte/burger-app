@@ -1,6 +1,9 @@
 import * as actionTypes from '../actions/actionTypes.actions';
 
 const {
+    PURCHASE_BURGER_FAIL,
+    PURCHASE_BURGER_SUCCESS,
+    PURCHASE_BURGER_REQUEST,
     ADD_INGREDIENT,
     REMOVE_INGREDIENT,
     GET_INGREDIENTS_REQUEST,
@@ -65,6 +68,28 @@ const reducer = (state = initialState, action) => {
                 error: action.error,
                 loading: false,
             };
+        case PURCHASE_BURGER_REQUEST:
+            return ({
+                ...state,
+                loading: true,
+                successMessage: false,
+                error: false,
+            });
+        case PURCHASE_BURGER_FAIL:
+            return ({
+                ...state,
+                error: action.error,
+                loading: false,
+                successMessage: false,
+            });
+        case PURCHASE_BURGER_SUCCESS:
+            return ({
+                ...state,
+                purchased: true,
+                loading: false,
+                error: false,
+                successMessage: "Your burger is being prepared with order id: " + action.orderId,
+            });
         default:
             return state;
     }

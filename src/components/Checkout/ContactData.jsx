@@ -20,7 +20,7 @@ const ContactContainer = styled.div`
   }
 `;
 
-const ContactData = ({ ingredients, price, purchaseBurger, history }) => {
+const ContactData = ({ ingredients, price, purchaseBurger}) => {
     const [ formState, setFormState ] = useState({
         orderForm: {
             name: {
@@ -139,7 +139,6 @@ const ContactData = ({ ingredients, price, purchaseBurger, history }) => {
         }), {});
         const order = { ingredients, price , customer };
         purchaseBurger(order);
-        history.push('/orders');
     };
     return (
         <ContactContainer>
@@ -164,15 +163,16 @@ const ContactData = ({ ingredients, price, purchaseBurger, history }) => {
     )
 };
 
-export default reactReduxConnector(({ order: { loading }, burgerBuilder: { ingredients, totalPrice }}) => {
+export default reactReduxConnector(({burgerBuilder: { ingredients, totalPrice, loading, successMessage }}) => {
     return {
         loading: loading,
         ingredients: ingredients,
         price: totalPrice,
+        successMessage,
     }
 },
     (dispatch) => {
         return {
             purchaseBurger: (order) => dispatch(purchaseBurger(order))
         }
-})(withRouter(ContactData));
+})(ContactData);

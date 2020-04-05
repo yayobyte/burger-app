@@ -11,10 +11,9 @@ const {
     GET_ORDERS_FAIL,
 } = actions;
 
-const purchaseBurgerSuccess = (id, order) =>  ({
+const purchaseBurgerSuccess = (response) =>  ({
     type: PURCHASE_BURGER_SUCCESS,
-    orderId: id,
-    orderData: order,
+    orderId: response.name,
 });
 
 const purchaseBurgerFail = (error) => ({
@@ -31,9 +30,11 @@ export const purchaseBurger = (orderData) => {
         dispatch(purchaseBurgerRequest());
         instance.post('/orders.json', orderData)
             .then(( { data } ) => {
-                dispatch(purchaseBurgerSuccess(data, orderData));
+                console.log("data: ", data);
+                dispatch(purchaseBurgerSuccess(data));
             })
             .catch((error) => {
+                console.log("error: ", error);
                 dispatch(purchaseBurgerFail(error))
             });
     })
