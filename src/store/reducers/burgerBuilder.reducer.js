@@ -46,6 +46,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: true,
+                error: false,
             };
         case GET_INGREDIENTS_SUCCESS:
             return {
@@ -56,11 +57,12 @@ const reducer = (state = initialState, action) => {
                         acc + action.ingredients[item]
                 ), initialState.totalPrice),
                 loading: false,
+                error: false,
             };
         case GET_INGREDIENTS_FAIL:
             return {
                 ...state,
-                error: true,
+                error: action.error,
                 loading: false,
             };
         default:

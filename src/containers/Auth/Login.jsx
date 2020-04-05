@@ -96,13 +96,12 @@ export default ({ login }) => {
                         }
                     </form>
                     <hr/>
-                    <Button className="success" click={submit} disabled={!formValidity}>
-                        {isSignIn ? "Login" : "Register"}
-                    </Button>
                     <Button className="danger" click={() => setIsSignIn(!isSignIn)} >
                         Switch to {isSignIn ? 'Register' : "Login"}
                     </Button>
-
+                    <Button className="success" click={submit} disabled={!formValidity}>
+                        {isSignIn ? "Login" : "Register"}
+                    </Button>
                 </>
             }
 

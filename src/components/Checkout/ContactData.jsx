@@ -1,12 +1,8 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import { withRouter } from 'react-router-dom';
-import instance from '../../server';
-import withErrorHandler from "../Hoc/withUserMessages";
-import Button from "../UI/Button/Button";
-import Spinner from "../UI/Spinner/Spinner";
-import Input from "../UI/Input";
-import { connect } from "react-redux";
+import { Button, Input } from "../UI";
+import reactReduxConnector from "../../helpers/reactReduxConnector";
 import { purchaseBurger } from "../../store/actions";
 import { checkFieldValidity, checkFormValidity } from "./../../helpers/";
 
@@ -24,7 +20,7 @@ const ContactContainer = styled.div`
   }
 `;
 
-const ContactData = ({ ingredients, price, loading, purchaseBurger, history }) => {
+const ContactData = ({ ingredients, price, purchaseBurger, history }) => {
     const [ formState, setFormState ] = useState({
         orderForm: {
             name: {
@@ -147,34 +143,28 @@ const ContactData = ({ ingredients, price, loading, purchaseBurger, history }) =
     };
     return (
         <ContactContainer>
-            { loading ?
-                <Spinner/>
-                :
-                <>
-                    <h3> Enter your contact details</h3>
-                    <form>
-                        {
-                            Object.keys(formState.orderForm).map((item) => (
-                                <Input
-                                    key={item}
-                                    name={item}
-                                    type={formState.orderForm[item].elementType}
-                                    config={formState.orderForm[item].elementConfig}
-                                    elementState={formState.orderForm[item].elementState}
-                                    onChange={(target) => setValue(target, item)}
-                                />
-                            ))
-                        }
-                    </form>
-                    <hr/>
-                    <Button className="success" click={order} disabled={!formState.isValid}>Order</Button>
-                </>
-            }
+            <h3> Enter your contact details</h3>
+            <form>
+                {
+                    Object.keys(formState.orderForm).map((item) => (
+                        <Input
+                            key={item}
+                            name={item}
+                            type={formState.orderForm[item].elementType}
+                            config={formState.orderForm[item].elementConfig}
+                            elementState={formState.orderForm[item].elementState}
+                            onChange={(target) => setValue(target, item)}
+                        />
+                    ))
+                }
+            </form>
+            <hr/>
+            <Button className="success" click={order} disabled={!formState.isValid}>Order</Button>
         </ContactContainer>
     )
 };
 
-export default connect(({ order: { loading }, burgerBuilder: { ingredients, totalPrice }}) => {
+export default reactReduxConnector(({ order: { loading }, burgerBuilder: { ingredients, totalPrice }}) => {
     return {
         loading: loading,
         ingredients: ingredients,
@@ -185,4 +175,4 @@ export default connect(({ order: { loading }, burgerBuilder: { ingredients, tota
         return {
             purchaseBurger: (order) => dispatch(purchaseBurger(order))
         }
-})(withErrorHandler(withRouter(ContactData), instance));
+})(withRouter(ContactData));

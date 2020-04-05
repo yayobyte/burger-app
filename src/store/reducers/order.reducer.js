@@ -23,12 +23,15 @@ export default (state = initialState, action) => {
             return ({
                 ...state,
                 loading: true,
+                successMessage: false,
+                error: false,
             });
         case PURCHASE_BURGER_FAIL:
             return ({
                 ...state,
                 error: action.error,
                 loading: false,
+                successMessage: false,
             });
         case PURCHASE_BURGER_SUCCESS:
             const newOrder = {
@@ -40,23 +43,30 @@ export default (state = initialState, action) => {
                 orders: state.orders.concat(newOrder),
                 purchased: true,
                 loading: false,
+                error: false,
+                successMessage: "Your burger is being prepared"
             });
         case GET_ORDERS_REQUEST:
             return ({
                 ...state,
                 loading: true,
+                error: false,
+                successMessage: false,
             });
         case GET_ORDERS_SUCCESS:
             return ({
                 ...state,
                 orders: action.orders,
                 loading: false,
+                successMessage: undefined,
+                error: false,
             });
         case GET_ORDERS_FAIL:
             return ({
                 ...state,
                 error: action.error,
                 loading: false,
+                successMessage: false,
             });
         case PURCHASE_INIT:
             return ({

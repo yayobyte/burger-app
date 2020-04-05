@@ -1,6 +1,6 @@
 import * as actions from "../../store/actions/";
-import {connect} from "react-redux";
 import BurgerBuilder from "./BurgerBuilder";
+import reactReduxConnector from "../../helpers/reactReduxConnector";
 
 const {addIngredient, removeIngredient, initIngredients } = actions;
 
@@ -17,4 +17,4 @@ const mapDispatchToProps = (dispatch) => ({
     initIngredients: () => dispatch(initIngredients()),
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(BurgerBuilder);
+export default reactReduxConnector(mapStateToProps,mapDispatchToProps)(BurgerBuilder);
