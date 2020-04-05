@@ -6,7 +6,7 @@ import Burger from "../../components/Burger/Burger";
 import Aux from '../../components/Hoc/index';
 import Modal from "../../components/UI/Modal";
 import OrderSummary from "../../components/OrderSummary";
-import withErrorHandler from "../../components/Hoc/withErrorHandler";
+import withErrorHandler from "../../components/Hoc/withUserMessages";
 import instance from "../../server";
 
 const BurgerBuilder = ({

@@ -9,6 +9,7 @@ const {
 const initialState = {
     loading: false,
     error: false,
+    successMessage: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,15 +17,20 @@ const reducer = (state = initialState, action) => {
         case LOGIN_REQUEST:
             return ({
                 loading: true,
+                successMessage: false,
+                error: false,
             });
         case LOGIN_FAIL:
             return ({
                 loading: false,
-                error: action.error
+                successMessage: false,
+                error: action.error,
             });
         case LOGIN_SUCCESS:
             return ({
                 loading: false,
+                error: false,
+                successMessage: "Login Successful",
                 data: action.data,
             });
         default:

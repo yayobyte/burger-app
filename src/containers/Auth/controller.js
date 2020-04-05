@@ -1,10 +1,10 @@
-import { connect } from "react-redux";
 import Login from "./Login";
 import { login } from "../../store/actions";
+import reactReduxConnector from "../../helpers/reactReduxConnector";
 
-const mapStateToProps = ({ login }) => ({ login });
+const mapStateToProps = ({ auth }) => ({ auth });
 const mapDispatchToProps = (dispatch) => ({
-    login: (email, password) => dispatch(login(email, password))
+    login: (email, password, method) => dispatch(login(email, password, method))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default reactReduxConnector(mapStateToProps, mapDispatchToProps)(Login,"auth" );

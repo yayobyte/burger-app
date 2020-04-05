@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import { withRouter } from 'react-router-dom';
 import instance from '../../server';
-import withErrorHandler from "../Hoc/withErrorHandler";
+import withErrorHandler from "../Hoc/withUserMessages";
 import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
 import Input from "../UI/Input";

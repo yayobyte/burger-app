@@ -4,6 +4,7 @@ import Input from "../../components/UI/Input";
 import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { checkFieldValidity, checkFormValidity } from "./../../helpers/";
+import { SIGN_IN, SIGN_UP } from "../../config";
 
 const LoginContainer = styled.div`
   margin: 20px auto;
@@ -22,6 +23,7 @@ const LoginContainer = styled.div`
 export default ({ login }) => {
     const loading = false;
     const [formValidity, setFormValidity] = useState(false);
+    const [isSignIn, setIsSignIn] = useState(true);
     const [loginForm, setLoginForm] = useState({
         email: {
             elementType: 'input',
@@ -68,7 +70,8 @@ export default ({ login }) => {
         setLoginForm({ ...newFormState });
     };
     const submit = () => {
-        login(loginForm.email.elementState.value, loginForm.password.elementState.value);
+        const method = isSignIn ? SIGN_IN : SIGN_UP;
+        login(loginForm.email.elementState.value, loginForm.password.elementState.value, method);
     };
     return (
         <LoginContainer>
@@ -76,7 +79,7 @@ export default ({ login }) => {
                 <Spinner/>
                 :
                 <>
-                    <h2>Login</h2>
+                    <h2>{isSignIn ? "Login" : "Register"}</h2>
                     <p>Powered by google firebase. Passwords will never be stored</p>
                     <form>
                         {
@@ -93,10 +96,16 @@ export default ({ login }) => {
                         }
                     </form>
                     <hr/>
-                    <Button className="success" click={submit} disabled={!formValidity}>Order</Button>
-                    <Button className="danger" click={login} >Cancel</Button>
+                    <Button className="success" click={submit} disabled={!formValidity}>
+                        {isSignIn ? "Login" : "Register"}
+                    </Button>
+                    <Button className="danger" click={() => setIsSignIn(!isSignIn)} >
+                        Switch to {isSignIn ? 'Register' : "Login"}
+                    </Button>
+
                 </>
             }
+
         </LoginContainer>
     );
 };

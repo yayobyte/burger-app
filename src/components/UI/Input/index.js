@@ -1,3 +1,3 @@
-import Index from "./Input";
+import Input from "./Input";
 
-export default Index;
+export default Input;
