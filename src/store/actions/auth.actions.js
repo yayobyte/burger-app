@@ -7,10 +7,6 @@ import {
 } from "./actionTypes.actions";
 import { getFirebaseUrl } from "../../config";
 
-const errorCodes = {
-    "INVALID_PASSWORD": "Invalid Password",
-};
-
 const loginRequest = () => ({
     type: LOGIN_REQUEST,
 });

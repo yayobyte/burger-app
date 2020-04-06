@@ -8,7 +8,7 @@ const Main = styled.main`
   margin-top: 72px;
 `;
 
-const Layout = ({ children }) => {
+const Layout = ({ children, isAuthenticated }) => {
     const [ layoutState, setLayoutState ] = useState({
         showSideDrawer: false,
     });
@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
     };
     return (
         <Aux>
-            <Toolbar open={toggleSideDrawer}/>
+            <Toolbar open={toggleSideDrawer} isAuthenticated={isAuthenticated} />
             <SideDrawer show={layoutState.showSideDrawer} close={toggleSideDrawer} />
             <Main>{children}</Main>
         </Aux>

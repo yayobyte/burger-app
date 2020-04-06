@@ -11,6 +11,8 @@ const initialState = {
     loading: false,
     error: false,
     successMessage: false,
+    idToken: null,
+    localId: null,
 };
 
 const reducer = (state = initialState, action) => {

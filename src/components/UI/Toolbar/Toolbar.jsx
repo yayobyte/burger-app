@@ -33,12 +33,12 @@ const Toolbar = styled.header`
   }
 `;
 
-export default ({ open }) => (
+export default ({ open, isAuthenticated }) => (
     <Toolbar>
         <SidebarToggle toggle={open}/>
         <Logo className="logo"/>
         <nav className="desktop-only">
-            <Navigation />
+            <Navigation isAuthenticated={isAuthenticated} />
         </nav>
     </Toolbar>
 );

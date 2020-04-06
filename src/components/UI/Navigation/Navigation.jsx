@@ -16,11 +16,14 @@ const UnorderedList = styled.ul`
     }
 `;
 
-const Navigation = () => (
+const Navigation = ({ isAuthenticated }) => (
     <UnorderedList>
         <NavigationItem link="/" exact>Burger Builder</NavigationItem>
         <NavigationItem link="/orders">Orders</NavigationItem>
-        <NavigationItem link="/auth">Authenticate</NavigationItem>
+        {isAuthenticated
+            ? <NavigationItem link="/logout">Logout</NavigationItem>
+            : <NavigationItem link="/auth">Login</NavigationItem>
+        }
     </UnorderedList>
 );
 
