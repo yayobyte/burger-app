@@ -3,21 +3,39 @@ import {
     LOGIN_REQUEST,
     LOGIN_FAIL,
     LOGIN_SUCCESS,
+    LOG_OUT,
 } from "./actionTypes.actions";
 import { getFirebaseUrl } from "../../config";
+
+const errorCodes = {
+    "INVALID_PASSWORD": "Invalid Password",
+};
 
 const loginRequest = () => ({
     type: LOGIN_REQUEST,
 });
 
-const loginFail = (error) => ({
+const loginFail = ({ data }) => ({
     type: LOGIN_FAIL,
-    error,
+    error: data.error,
 });
 
-const loginSuccess = (data) => ({
+const logout = () => ({
+    type: LOG_OUT,
+});
+
+const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(logout());
+        }, expirationTime * 1000);
+    }
+};
+
+const loginSuccess = ({ idToken, localId }) => ({
     type: LOGIN_SUCCESS,
-    data,
+    idToken,
+    localId,
 });
 
 export const login = (email, password, method) => {
@@ -27,9 +45,10 @@ export const login = (email, password, method) => {
         axios.post(getFirebaseUrl(method), body)
             .then(({ data }) => {
                 dispatch(loginSuccess(data));
+                checkAuthTimeout(data.expiresIn);
             })
-            .catch((error) => {
-                dispatch(loginFail(error));
+            .catch(({ response }) => {
+                dispatch(loginFail(response));
             })
     }
 };

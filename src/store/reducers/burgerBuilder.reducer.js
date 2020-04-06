@@ -78,7 +78,10 @@ const reducer = (state = initialState, action) => {
         case PURCHASE_BURGER_FAIL:
             return ({
                 ...state,
-                error: action.error,
+                error: {
+                    status: action.error.status,
+                    message: action.error.data.error,
+                },
                 loading: false,
                 successMessage: false,
             });

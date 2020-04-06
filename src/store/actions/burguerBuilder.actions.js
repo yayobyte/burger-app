@@ -18,29 +18,29 @@ export const removeIngredient = (ingredientName) => ({
     ingredientName,
 });
 
-const setIngredientsSuccess = (ingredients) => ({
+const getIngredientsSuccess = (ingredients) => ({
     type: GET_INGREDIENTS_SUCCESS,
     ingredients,
 });
 
-const setIngredientsFail = (error) => ({
+const getIngredientsFail = (error) => ({
     type: GET_INGREDIENTS_FAIL,
     error: error,
 });
 
-export const setIngredientsRequest = () => ({
+export const getIngredientsRequest = () => ({
     type: GET_INGREDIENTS_REQUEST,
 });
 
 export const initIngredients = () => {
     return dispatch => {
-        dispatch(setIngredientsRequest());
+        dispatch(getIngredientsRequest());
         instance.get("config/ingredients.json")
             .then(({ data }) => {
-                dispatch(setIngredientsSuccess(data))
+                dispatch(getIngredientsSuccess(data))
             })
-            .catch(() => {
-                dispatch(setIngredientsFail())
+            .catch(({ response }) => {
+                dispatch(getIngredientsFail(response))
             });
     }
 };

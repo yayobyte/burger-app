@@ -34,7 +34,10 @@ export default (state = initialState, action) => {
         case GET_ORDERS_FAIL:
             return ({
                 ...state,
-                error: action.error,
+                error: {
+                    status: action.error.status,
+                    message: action.error.data.error,
+                },
                 loading: false,
                 successMessage: false,
             });

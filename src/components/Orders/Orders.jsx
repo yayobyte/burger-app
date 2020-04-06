@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import Order from "./Order";
 import Spinner from "../UI/Spinner/Spinner";
 
-const Orders = ({ orders, getOrders }) => {
+const Orders = ({ orders, getOrders, idToken }) => {
     useEffect(() => {
-        getOrders();
+        getOrders(idToken);
     }, []);
     return (
         <div>

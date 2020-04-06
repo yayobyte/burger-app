@@ -19,7 +19,6 @@ const ErrorContainer = styled.div`
 
 const withUserMessages = (WrappedComponent) => (
     (props) => {
-        console.log(props);
         const { loading, error, successMessage } = props;
         const [ openModal, setOpenModal ] = useState(false);
         useEffect(() => {

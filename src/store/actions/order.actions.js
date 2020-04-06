@@ -25,17 +25,15 @@ const purchaseBurgerRequest = () => ({
     type: PURCHASE_BURGER_REQUEST,
 });
 
-export const purchaseBurger = (orderData) => {
+export const purchaseBurger = (orderData, token) => {
     return (dispatch => {
         dispatch(purchaseBurgerRequest());
-        instance.post('/orders.json', orderData)
+        instance.post('/orders.json?auth=' + token , orderData)
             .then(( { data } ) => {
-                console.log("data: ", data);
                 dispatch(purchaseBurgerSuccess(data));
             })
-            .catch((error) => {
-                console.log("error: ", error);
-                dispatch(purchaseBurgerFail(error))
+            .catch(({ response }) => {
+                dispatch(purchaseBurgerFail(response))
             });
     })
 };
@@ -58,15 +56,15 @@ const getOrdersFail = (error) => ({
     error,
 });
 
-export const getOrders = () => {
+export const getOrders = (token) => {
     return ((dispatch) => {
         dispatch(getOrdersReq());
-        instance.get('/orders.json')
+        instance.get('/orders.json?auth=' + token)
             .then(( { data } ) => {
                 dispatch(getOrdersSuc(data))
             })
-            .catch((error) => {
-                dispatch(getOrdersFail(error))
+            .catch(({ response }) => {
+                dispatch(getOrdersFail(response))
             })
     });
 }

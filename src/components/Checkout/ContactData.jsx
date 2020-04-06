@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
-import { withRouter } from 'react-router-dom';
 import { Button, Input } from "../UI";
 import reactReduxConnector from "../../helpers/reactReduxConnector";
 import { purchaseBurger } from "../../store/actions";
@@ -20,7 +19,8 @@ const ContactContainer = styled.div`
   }
 `;
 
-const ContactData = ({ ingredients, price, purchaseBurger}) => {
+const ContactData = ({ ingredients, price, purchaseBurger, token }) => {
+    console.log(token);
     const [ formState, setFormState ] = useState({
         orderForm: {
             name: {
@@ -138,7 +138,7 @@ const ContactData = ({ ingredients, price, purchaseBurger}) => {
                 ...item,
         }), {});
         const order = { ingredients, price , customer };
-        purchaseBurger(order);
+        purchaseBurger(order, token);
     };
     return (
         <ContactContainer>
@@ -163,16 +163,24 @@ const ContactData = ({ ingredients, price, purchaseBurger}) => {
     )
 };
 
-export default reactReduxConnector(({burgerBuilder: { ingredients, totalPrice, loading, successMessage }}) => {
+const mapStateToProps = ({
+    burgerBuilder: { ingredients, totalPrice, loading, successMessage, error },
+    auth: { idToken },
+}) => {
     return {
-        loading: loading,
-        ingredients: ingredients,
+        loading,
+        ingredients,
+        error,
         price: totalPrice,
         successMessage,
+        token: idToken,
     }
-},
-    (dispatch) => {
-        return {
-            purchaseBurger: (order) => dispatch(purchaseBurger(order))
-        }
-})(ContactData);
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        purchaseBurger: (order, token) => dispatch(purchaseBurger(order, token))
+    }
+};
+
+export default reactReduxConnector(mapStateToProps,mapDispatchToProps)(ContactData);
