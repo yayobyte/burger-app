@@ -65,7 +65,7 @@ const BuildControlsContainer = styled.div`
 `;
 
 const BuildControls = ({
-    addIngredient, deleteIngredient, price, purchasable, purchase, ingredients,
+    addIngredient, deleteIngredient, price, purchasable, purchase, ingredients, isAuthenticated,
 }) => {
     const buttonControls = Object.fromEntries(Object.entries(ingredients).map(
         ([ key, value ]) => ([[key], !!value])
@@ -86,7 +86,8 @@ const BuildControls = ({
                 className="OrderButton"
                 disabled={!purchasable}
                 onClick={purchase}
-            >ORDER NOW
+            >
+                {isAuthenticated ? "ORDER NOW" : "SIGN UP TO ORDER "}
             </button>
         </BuildControlsContainer>
     );

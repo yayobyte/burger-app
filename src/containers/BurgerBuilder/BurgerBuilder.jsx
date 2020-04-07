@@ -9,14 +9,18 @@ import OrderSummary from "../../components/OrderSummary";
 
 const BurgerBuilder = ({
     addIngredient, deleteIngredient, initIngredients,
-    totalPrice, history, ingredients,
+    totalPrice, history, ingredients, isAuthenticated,
 }) => {
     const [ burgerState, setBurgerState ] = useState({
         purchasing: false,
         settingOrder: false,
     });
     const purchase = () => {
-        setBurgerState({ ...burgerState, purchasing: true });
+        if (isAuthenticated){
+            setBurgerState({ ...burgerState, purchasing: true });
+        } else {
+            history.push('/auth');
+        }
     };
     const cancelPurchase = () => {
         setBurgerState({ ...burgerState, purchasing: false })
@@ -59,6 +63,7 @@ const BurgerBuilder = ({
                 price={totalPrice}
                 purchasable={getPurchaseState(ingredients)}
                 purchase={purchase}
+                isAuthenticated={isAuthenticated}
             />
         </Aux>
     );

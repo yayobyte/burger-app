@@ -48,7 +48,6 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 error: false,
-                successMessage: "Logged Out",
                 idToken: null,
                 localId: null,
             });

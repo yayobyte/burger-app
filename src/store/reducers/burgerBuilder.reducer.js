@@ -16,6 +16,7 @@ const initialState= {
     totalPrice: 4,
     error: false,
     loading: true,
+    building: false,
 };
 
 const INGREDIENT_PRICES = {
@@ -35,6 +36,7 @@ const reducer = (state = initialState, action) => {
                     [action.ingredientName] : state.ingredients[action.ingredientName] + 1,
                 },
                 totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+                building: true,
             };
         case REMOVE_INGREDIENT:
             return {
@@ -44,6 +46,7 @@ const reducer = (state = initialState, action) => {
                     [action.ingredientName] : state.ingredients[action.ingredientName] - 1,
                 },
                 totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+                building: true,
             };
         case GET_INGREDIENTS_REQUEST:
             return {
@@ -61,6 +64,7 @@ const reducer = (state = initialState, action) => {
                 ), initialState.totalPrice),
                 loading: false,
                 error: false,
+                building: false,
             };
         case GET_INGREDIENTS_FAIL:
             return {
@@ -92,6 +96,7 @@ const reducer = (state = initialState, action) => {
                 loading: false,
                 error: false,
                 successMessage: "Your burger is being prepared with order id: " + action.orderId,
+                building: false,
             });
         default:
             return state;

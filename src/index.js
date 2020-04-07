@@ -8,6 +8,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { burgerBuilderReducer, orderReducer, authReducer } from './store/reducers/';
+import Initializer from "./containers/Initializer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
@@ -26,6 +27,7 @@ const store = createStore(
 const app = (
     <Provider store={store}>
         <BrowserRouter>
+            <Initializer />
             <App />
         </BrowserRouter>
     </Provider>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Redirect } from "react-router-dom";
 import Input from "../../components/UI/Input";
 import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
@@ -20,7 +21,7 @@ const LoginContainer = styled.div`
   }
 `;
 
-export default ({ login }) => {
+export default ({ login, isAuthenticated, redirectToPath }) => {
     const loading = false;
     const [formValidity, setFormValidity] = useState(false);
     const [isSignIn, setIsSignIn] = useState(true);
@@ -73,6 +74,9 @@ export default ({ login }) => {
         const method = isSignIn ? SIGN_IN : SIGN_UP;
         login(loginForm.email.elementState.value, loginForm.password.elementState.value, method);
     };
+    if (isAuthenticated) {
+        return <Redirect to={redirectToPath} />
+    }
     return (
         <LoginContainer>
             { loading ?
@@ -106,7 +110,6 @@ export default ({ login }) => {
                     </Button>
                 </>
             }
-
         </LoginContainer>
     );
 };

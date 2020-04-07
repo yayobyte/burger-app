@@ -12,4 +12,6 @@ export {
 
 export {
     login,
+    logout,
+    checkAuthState,
 } from "./auth.actions"

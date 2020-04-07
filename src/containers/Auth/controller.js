@@ -2,10 +2,15 @@ import Login from "./Login";
 import { login } from "../../store/actions";
 import reactReduxConnector from "../../helpers/reactReduxConnector";
 
-const mapStateToProps = ({ auth: { loading, successMessage, error } }) => ({
+const mapStateToProps = ({
+    auth: { loading, successMessage, error, idToken },
+    burgerBuilder: { building },
+}) => ({
     loading,
     successMessage,
     error,
+    isAuthenticated: idToken !== null,
+    redirectToPath: building ? "/checkout" : "/",
 });
 const mapDispatchToProps = (dispatch) => ({
     login: (email, password, method) => dispatch(login(email, password, method))
