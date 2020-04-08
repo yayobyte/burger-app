@@ -76,7 +76,6 @@ const reducer = (state = initialState, action) => {
             return ({
                 ...state,
                 loading: true,
-                successMessage: false,
                 error: false,
             });
         case PURCHASE_BURGER_FAIL:
@@ -87,7 +86,6 @@ const reducer = (state = initialState, action) => {
                     message: action.error.data.error,
                 },
                 loading: false,
-                successMessage: false,
             });
         case PURCHASE_BURGER_SUCCESS:
             return ({
@@ -95,7 +93,6 @@ const reducer = (state = initialState, action) => {
                 purchased: true,
                 loading: false,
                 error: false,
-                successMessage: "Your burger is being prepared with order id: " + action.orderId,
                 building: false,
             });
         default:

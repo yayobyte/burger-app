@@ -5,6 +5,12 @@ import {
     LOGIN_SUCCESS,
     LOG_OUT,
 } from "./actionTypes.actions";
+
+import {
+    setSuccessMessage,
+    setErrorMessages,
+} from "./userMessages.actions"
+
 import { getFirebaseUrl } from "../../config";
 
 const loginRequest = () => ({
@@ -16,12 +22,19 @@ const loginFail = ({ data }) => ({
     error: data.error,
 });
 
-export const logout = () => {
-    localStorage.removeItem("idToken");
-    localStorage.removeItem("expirationDate");
+const logoutAction = () => {
     return ({
         type: LOG_OUT,
     });
+};
+
+export const logout = () => {
+    return (dispatch) => {
+        localStorage.removeItem("idToken");
+        localStorage.removeItem("expirationDate");
+        dispatch(logoutAction());
+        dispatch(setSuccessMessage("Logout Successful"));
+    }
 };
 
 const checkAuthTimeout = (expirationTime) => {
@@ -74,9 +87,11 @@ export const login = (email, password, method) => {
                 dispatch(saveTokenOnLocalStorage(data));
                 dispatch(loginSuccess(data));
                 dispatch(checkAuthTimeout(data.expiresIn));
+                dispatch(setSuccessMessage("Login Successful"));
             })
             .catch(({ response }) => {
                 dispatch(loginFail(response));
+                dispatch(setErrorMessages(response.data));
             })
     }
 };

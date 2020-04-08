@@ -3,12 +3,10 @@ import { login } from "../../store/actions";
 import reactReduxConnector from "../../helpers/reactReduxConnector";
 
 const mapStateToProps = ({
-    auth: { loading, successMessage, error, idToken },
+    auth: { loading, idToken },
     burgerBuilder: { building },
 }) => ({
     loading,
-    successMessage,
-    error,
     isAuthenticated: idToken !== null,
     redirectToPath: building ? "/checkout" : "/",
 });

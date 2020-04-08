@@ -4,7 +4,7 @@ import CheckoutSummary from "./CheckoutSummary";
 import ContactData from "./ContactData";
 
 
-const Checkout = ({ history, match, ingredients, price, purchaseInit, purchased }) => {
+const Checkout = ({ history, match, ingredients, price, purchaseInit, purchased, building }) => {
     useEffect(() => {
         purchaseInit();
     }, []);
@@ -15,7 +15,7 @@ const Checkout = ({ history, match, ingredients, price, purchaseInit, purchased 
         history.replace(match.path + '/contact-data' );
     };
     if (ingredients) {
-        if (purchased){
+        if (purchased && !building){
             return (
                 <Redirect to="/" />
             );

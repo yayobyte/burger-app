@@ -10,7 +10,6 @@ const {
 const initialState = {
     loading: false,
     error: false,
-    successMessage: false,
     idToken: null,
     localId: null,
 };
@@ -21,14 +20,12 @@ const reducer = (state = initialState, action) => {
             return ({
                 ...state,
                 loading: true,
-                successMessage: false,
                 error: false,
             });
         case LOGIN_FAIL:
             return ({
                 ...state,
                 loading: false,
-                successMessage: false,
                 error: {
                     status: action.error.status,
                     message: action.error.data.error,
@@ -39,7 +36,6 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 error: false,
-                successMessage: "Login Successful",
                 idToken: action.idToken,
                 localId: action.localId,
             });
@@ -51,7 +47,6 @@ const reducer = (state = initialState, action) => {
                 idToken: null,
                 localId: null,
             });
-
         default:
             return (state);
     }

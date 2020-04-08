@@ -19,8 +19,7 @@ const ContactContainer = styled.div`
   }
 `;
 
-const ContactData = ({ ingredients, price, purchaseBurger, token }) => {
-    console.log(token);
+const ContactData = ({ ingredients, price, purchaseBurger, token, userId }) => {
     const [ formState, setFormState ] = useState({
         orderForm: {
             name: {
@@ -137,7 +136,7 @@ const ContactData = ({ ingredients, price, purchaseBurger, token }) => {
                 ...obj,
                 ...item,
         }), {});
-        const order = { ingredients, price , customer };
+        const order = { ingredients, price , customer, userId };
         purchaseBurger(order, token);
     };
     return (
@@ -165,7 +164,7 @@ const ContactData = ({ ingredients, price, purchaseBurger, token }) => {
 
 const mapStateToProps = ({
     burgerBuilder: { ingredients, totalPrice, loading, successMessage, error },
-    auth: { idToken },
+    auth: { idToken, localId },
 }) => {
     return {
         loading,
@@ -174,6 +173,7 @@ const mapStateToProps = ({
         price: totalPrice,
         successMessage,
         token: idToken,
+        userId: localId,
     }
 };
 

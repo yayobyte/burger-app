@@ -8,6 +8,10 @@ import {
     GET_INGREDIENTS_FAIL,
 } from "./actionTypes.actions";
 
+import {
+    setErrorMessages,
+} from "./userMessages.actions"
+
 export const addIngredient = (ingredientName) => ({
     type: ADD_INGREDIENT,
     ingredientName,
@@ -37,10 +41,11 @@ export const initIngredients = () => {
         dispatch(getIngredientsRequest());
         instance.get("config/ingredients.json")
             .then(({ data }) => {
-                dispatch(getIngredientsSuccess(data))
+                dispatch(getIngredientsSuccess(data));
             })
             .catch(({ response }) => {
-                dispatch(getIngredientsFail(response))
+                dispatch(getIngredientsFail(response));
+                dispatch(setErrorMessages(response.data));
             });
     }
 };

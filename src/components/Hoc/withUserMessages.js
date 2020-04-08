@@ -19,15 +19,13 @@ const ErrorContainer = styled.div`
 
 const withUserMessages = (WrappedComponent) => (
     (props) => {
-        const { loading, error, successMessage } = props;
+        const { loading, error, successMessage, removeMessages } = props;
         const [ openModal, setOpenModal ] = useState(false);
         useEffect(() => {
-            setOpenModal(!!error);
-        }, [error]);
-        useEffect(() => {
-            setOpenModal(!!successMessage);
-        }, [successMessage]);
+            setOpenModal(!!error || !!successMessage);
+        }, [error, successMessage]);
         const closeModal = () => {
+            removeMessages();
             setOpenModal(null);
         };
         return (
@@ -35,9 +33,9 @@ const withUserMessages = (WrappedComponent) => (
                 {openModal &&
                     <Modal onCancel={closeModal} show={openModal}>
                         {error && (
-                            <ErrorContainer>
-                                <h3 style={{ color: "#650000"}}>Oops we got an error!</h3>
-                                <p>{error.message}</p>
+                            <ErrorContainer style={{ color: "#650000"}} >
+                                <h3>Oops we got an error!</h3>
+                                <p>{`${error.status} - ${error.statusText}`}</p>
                                 <hr />
                                 <div className="actions">
                                     <Button className='danger' click={closeModal}>Close</Button>

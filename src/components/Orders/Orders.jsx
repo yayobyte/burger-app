@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import _ from "lodash";
 import Order from "./Order";
-import Spinner from "../UI/Spinner/Spinner";
 
-const Orders = ({ orders, getOrders, idToken }) => {
+const Orders = ({ orders, getOrders, idToken, userId }) => {
     useEffect(() => {
-        getOrders(idToken);
+        getOrders(idToken, userId);
     }, []);
     return (
         <div>
@@ -18,6 +19,12 @@ const Orders = ({ orders, getOrders, idToken }) => {
                     price={orders[item].price}
                 />
             ))}
+            {_.isEmpty(orders) && (
+                <div style={{ textAlign: "center" }}>
+                    <p>You do not have any order yet</p>
+                    <Link to="/" >Click to Order</Link>
+                </div>
+            )}
         </div>
     )
 };

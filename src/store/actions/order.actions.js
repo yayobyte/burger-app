@@ -1,5 +1,9 @@
 import * as actions from "./actionTypes.actions";
 import instance from "../../server";
+import {
+    setSuccessMessage,
+    setErrorMessages,
+} from "./userMessages.actions"
 
 const {
     PURCHASE_BURGER_REQUEST,
@@ -31,9 +35,11 @@ export const purchaseBurger = (orderData, token) => {
         instance.post('/orders.json?auth=' + token , orderData)
             .then(( { data } ) => {
                 dispatch(purchaseBurgerSuccess(data));
+                dispatch(setSuccessMessage(`Your burger is being prepared. Order id: ${data.name}`));
             })
             .catch(({ response }) => {
-                dispatch(purchaseBurgerFail(response))
+                dispatch(purchaseBurgerFail(response));
+                dispatch(setErrorMessages(response.data));
             });
     })
 };
@@ -56,15 +62,17 @@ const getOrdersFail = (error) => ({
     error,
 });
 
-export const getOrders = (token) => {
+export const getOrders = (token, userId) => {
     return ((dispatch) => {
         dispatch(getOrdersReq());
-        instance.get('/orders.json?auth=' + token)
+        const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
+        instance.get('/orders.json' + queryParams)
             .then(( { data } ) => {
                 dispatch(getOrdersSuc(data))
             })
             .catch(({ response }) => {
-                dispatch(getOrdersFail(response))
+                dispatch(getOrdersFail(response));
+                dispatch(setErrorMessages(response));
             })
     });
 }

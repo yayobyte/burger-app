@@ -2,15 +2,14 @@ import reactReduxConnector from "../../helpers/reactReduxConnector";
 import Orders from "./Orders";
 import { getOrders } from "./../../store/actions";
 
-const mapStateToProps = ({ order : { loading, orders, error, successMessage }, auth: { idToken }}) => ({
+const mapStateToProps = ({ order : { loading, orders }, auth: { idToken, localId }}) => ({
     loading,
-    error,
-    successMessage,
     orders,
-    idToken
+    idToken,
+    userId: localId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getOrders: (token) => dispatch(getOrders(token)),
+    getOrders: (token, userId) => dispatch(getOrders(token, userId)),
 });
 export default reactReduxConnector(mapStateToProps, mapDispatchToProps)(Orders);

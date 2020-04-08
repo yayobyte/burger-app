@@ -18,7 +18,7 @@ const Layout = ({ children, isAuthenticated }) => {
     return (
         <Aux>
             <Toolbar open={toggleSideDrawer} isAuthenticated={isAuthenticated} />
-            <SideDrawer show={layoutState.showSideDrawer} close={toggleSideDrawer} />
+            <SideDrawer show={layoutState.showSideDrawer} close={toggleSideDrawer} isAuthenticated={isAuthenticated} />
             <Main>{children}</Main>
         </Aux>
     )

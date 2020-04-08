@@ -37,13 +37,13 @@ const SideDrawerContainer = styled.div`
   }
 `;
 
-export default ({ show, close }) => (
+export default ({ show, close, isAuthenticated }) => (
     <Aux>
         <Backdrop show={show} click={close}/>
-        <SideDrawerContainer className={show? 'open' : 'close'}>
+        <SideDrawerContainer className={show? 'open' : 'close'} onClick={close}>
             <Logo className="logo"/>
             <nav>
-                <Navigation />
+                <Navigation isAuthenticated={isAuthenticated} />
             </nav>
         </SideDrawerContainer>
     </Aux>

@@ -9,8 +9,4 @@ const Initializer = ({ checkAuthState }) => {
     return null;
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    checkAuthState: () => dispatch(checkAuthState()),
-});
-
-export default connect(null, mapDispatchToProps)(Initializer);
+export default Initializer;
