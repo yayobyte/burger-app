@@ -26,10 +26,7 @@ const reducer = (state = initialState, action) => {
             return ({
                 ...state,
                 loading: false,
-                error: {
-                    status: action.error.status,
-                    message: action.error.data.error,
-                },
+                error: action.error,
             });
         case LOGIN_SUCCESS:
             return ({

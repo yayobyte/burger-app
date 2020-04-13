@@ -12,6 +12,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch(action.type) {
         case SET_ERROR_MESSAGES:
+            console.log(action.error);
             return({
                 ...state,
                 error: action.error,

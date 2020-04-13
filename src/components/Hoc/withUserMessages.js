@@ -35,7 +35,7 @@ const withUserMessages = (WrappedComponent) => (
                         {error && (
                             <ErrorContainer style={{ color: "#650000"}} >
                                 <h3>Oops we got an error!</h3>
-                                <p>{`${error.status} - ${error.statusText}`}</p>
+                                <p>{`${error.code} - ${error.message}`}</p>
                                 <hr />
                                 <div className="actions">
                                     <Button className='danger' click={closeModal}>Close</Button>

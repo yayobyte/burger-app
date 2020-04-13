@@ -91,7 +91,7 @@ export const login = (email, password, method) => {
             })
             .catch(({ response }) => {
                 dispatch(loginFail(response));
-                dispatch(setErrorMessages(response.data));
+                dispatch(setErrorMessages(response.data && response.data.error));
             })
     }
 };
