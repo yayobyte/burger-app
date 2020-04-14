@@ -37,6 +37,14 @@ export const logout = () => {
     }
 };
 
+const silentLogout = () => {
+    return (dispatch) => {
+        localStorage.removeItem("idToken");
+        localStorage.removeItem("expirationDate");
+        dispatch(logoutAction());
+    }
+};
+
 const checkAuthTimeout = (expirationTime) => {
     return dispatch => {
         setTimeout(() => {
@@ -55,7 +63,7 @@ export const checkAuthState = () => {
     return (dispatch) => {
         const token = localStorage.getItem("idToken");
         if (!token) {
-            dispatch(logout());
+            dispatch(silentLogout());
         } else {
             const expirationTime = new Date(localStorage.getItem("expirationDate"));
             if (expirationTime < new Date()){
