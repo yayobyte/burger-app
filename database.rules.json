@@ -1,6 +1,13 @@
 {
   "rules": {
-    ".read": true,
-    ".write": true
+    "config": {
+      ".read": true,
+      ".write": false
+    },
+    "orders": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      ".indexOn": ["userId"]
+    }
   }
 }
