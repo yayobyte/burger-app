@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../BurgerIngredient";
 import ingredientTypes from "../BurgerIngredient/burgerComponents";
@@ -7,11 +8,47 @@ import ingredientTypes from "../BurgerIngredient/burgerComponents";
 const BurgerContainer = styled.div`
   width: 100%;
   margin: auto;
-  height: 250px;
+  height: 100%;
   text-align: center;
   font-weight: bold;
   font-size: 1.2em;
   overflow-y: scroll;
+  
+  .ingredient-in {
+    animation: ingredientIn ${({timing}) => timing}ms ease-in forwards;
+  }
+  
+  .ingredient-out {
+    animation: ingredientOut ${({timing}) => timing}ms ease-in forwards;
+  }
+  
+  @keyframes ingredientIn {
+    0% {
+      transform: translateY(-700%);
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.7;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes ingredientOut {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 0.7;
+    }
+    100% {
+      transform: translateY(-700%);
+      opacity: 0;
+    }
+  }
   
   @media (min-width: 500px) and (min-height: 400px) {
     width: 250px;
@@ -30,19 +67,28 @@ const BurgerContainer = styled.div`
 `;
 
 const Burger = ({ ingredients }) => {
+    const timing = 200;
+    const classNames = {
+        enterActive: "ingredient-in",
+        exitActive: "ingredient-out",
+    };
     const arrayIngredients = Object.keys(ingredients).map(
         key => (
             [...Array(ingredients[key])].map((item , index) => (
-                <BurgerIngredient type={key} key={key + index}/>
+                <CSSTransition key={key + index} timeout={timing} classNames={classNames} >
+                    <BurgerIngredient type={key} />
+                </CSSTransition>
             ))
         )
     ).reduce((arr, el) => (
         arr.concat(el)
     ),[]);
     return (
-        <BurgerContainer>
+        <BurgerContainer timing={timing}>
             <BurgerIngredient type={ingredientTypes.breadTop} />
-            {arrayIngredients.length > 0 && arrayIngredients}
+            <TransitionGroup component={null}>
+                {arrayIngredients.length > 0 && arrayIngredients}
+            </TransitionGroup>
             {arrayIngredients.length === 0 && <p>Please add ingredients!</p>}
             <BurgerIngredient type={ingredientTypes.breadBottom} />
         </BurgerContainer>

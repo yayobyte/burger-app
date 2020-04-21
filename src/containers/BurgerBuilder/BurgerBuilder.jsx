@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import _ from "lodash";
+import styled from "styled-components";
 import BuildControls from "../../components/BuildControls";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import Burger from "../../components/Burger/Burger";
 import Aux from '../../components/Hoc/index';
 import Modal from "../../components/UI/Modal";
 import OrderSummary from "../../components/OrderSummary";
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 680px;
+  height: calc(92vh - 72px);
+`;
 
 const BurgerBuilder = ({
     addIngredient, deleteIngredient, initIngredients,
@@ -42,7 +51,7 @@ const BurgerBuilder = ({
         }
     }, [ingredients, initIngredients]);
     return (
-        <Aux>
+        <Container>
             <Burger ingredients={ingredients}/>
             <Modal show={burgerState.purchasing} onCancel={cancelPurchase}>
                 {burgerState.settingOrder?
@@ -65,7 +74,7 @@ const BurgerBuilder = ({
                 purchase={purchase}
                 isAuthenticated={isAuthenticated}
             />
-        </Aux>
+        </Container>
     );
 };
 
