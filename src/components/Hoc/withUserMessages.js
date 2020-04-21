@@ -30,35 +30,29 @@ const withUserMessages = (WrappedComponent) => (
         };
         return (
             <Hoc>
-                {openModal &&
-                    <Modal onCancel={closeModal} show={openModal}>
-                        {error && (
-                            <ErrorContainer style={{ color: "#650000"}} >
-                                <h3>Oops we got an error!</h3>
-                                <p>{`${error.code} - ${error.message}`}</p>
-                                <hr />
-                                <div className="actions">
-                                    <Button className='danger' click={closeModal}>Close</Button>
-                                </div>
-                            </ErrorContainer>
-                        )}
-                        {successMessage && (
-                            <ErrorContainer style={{ color: "#295F00"}}>
-                                <h3>Success!</h3>
-                                <p>{successMessage}</p>
-                                <hr />
-                                <div className="actions">
-                                    <Button className='success' click={closeModal}>Close</Button>
-                                </div>
-                            </ErrorContainer>
-                        )}
-                    </Modal>
-                }
-                {loading &&
-                    <Modal onCancel={() => null} show={loading}>
-                        <Spinner />
-                    </Modal>
-                }
+                <Modal onCancel={closeModal} show={openModal && error}>
+                    <ErrorContainer style={{ color: "#650000"}} >
+                        <h3>Oops we got an error!</h3>
+                        <p>{`${error && error.code} - ${error && error.message}`}</p>
+                        <hr />
+                        <div className="actions">
+                            <Button className='danger' click={closeModal}>Close</Button>
+                        </div>
+                    </ErrorContainer>
+                </Modal>
+                <Modal onCancel={closeModal} show={openModal && successMessage}>
+                    <ErrorContainer style={{ color: "#295F00"}}>
+                        <h3>Success!</h3>
+                        <p>{successMessage}</p>
+                        <hr />
+                        <div className="actions">
+                            <Button className='success' click={closeModal}>Close</Button>
+                        </div>
+                    </ErrorContainer>
+                </Modal>
+                <Modal onCancel={() => null} show={loading}>
+                    <Spinner />
+                </Modal>
                 <WrappedComponent { ...props} />
             </Hoc>
         );
