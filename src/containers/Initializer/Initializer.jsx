@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { checkAuthState } from "../../store/actions";
+import { useEffect } from "react";
 
 const Initializer = ({ checkAuthState }) => {
     useEffect(() => {

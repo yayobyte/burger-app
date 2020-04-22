@@ -4,7 +4,6 @@ import styled from "styled-components";
 import BuildControls from "../../components/BuildControls";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import Burger from "../../components/Burger/Burger";
-import Aux from '../../components/Hoc/index';
 import Modal from "../../components/UI/Modal";
 import OrderSummary from "../../components/OrderSummary";
 
