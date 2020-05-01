@@ -6,7 +6,7 @@ import Order from "./Order";
 const Orders = ({ orders, getOrders, idToken, userId }) => {
     useEffect(() => {
         getOrders(idToken, userId);
-    }, []);
+    }, [getOrders, idToken, userId]);
     return (
         <div>
             <h2>Orders</h2>

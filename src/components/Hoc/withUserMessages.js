@@ -30,7 +30,7 @@ const withUserMessages = (WrappedComponent) => (
         };
         return (
             <Hoc>
-                <Modal onCancel={closeModal} show={openModal && error}>
+                <Modal onCancel={closeModal} show={openModal && !!error}>
                     <ErrorContainer style={{ color: "#650000"}} >
                         <h3>Oops we got an error!</h3>
                         <p>{`${error && error.code} - ${error && error.message}`}</p>
@@ -40,7 +40,7 @@ const withUserMessages = (WrappedComponent) => (
                         </div>
                     </ErrorContainer>
                 </Modal>
-                <Modal onCancel={closeModal} show={openModal && successMessage}>
+                <Modal onCancel={closeModal} show={openModal && !!successMessage}>
                     <ErrorContainer style={{ color: "#295F00"}}>
                         <h3>Success!</h3>
                         <p>{successMessage}</p>

@@ -8,7 +8,7 @@ import ingredientTypes from "../BurgerIngredient/burgerComponents";
 const BurgerContainer = styled.div`
   width: 100%;
   margin: auto;
-  height: 100%;
+  height: 350px;
   text-align: center;
   font-weight: bold;
   font-size: 1.2em;
