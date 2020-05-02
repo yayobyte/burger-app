@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import thunk from "redux-thunk";
+import styled from "styled-components";
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
@@ -9,6 +10,15 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { burgerBuilderReducer, orderReducer, authReducer, userMessagesReducer } from './store/reducers/';
 import Initializer from "./containers/Initializer";
+
+const AppContainer = styled.div`
+  max-width: var(--app-width);
+  margin: auto;
+  
+  @media (min-width: 500px) {
+    border: 2px solid var(--brown);
+  }
+`;
 
 const composer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
 
@@ -31,7 +41,9 @@ const app = (
     <Provider store={store}>
         <BrowserRouter>
             <Initializer />
-            <App />
+            <AppContainer>
+                <App />
+            </AppContainer>
         </BrowserRouter>
     </Provider>
 );

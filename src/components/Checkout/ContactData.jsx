@@ -86,21 +86,6 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
                     touched: false,
                 },
             },
-            email: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'email',
-                    placeholder: 'Your Email',
-                },
-                validation: {
-                    required: true,
-                },
-                elementState: {
-                    value: '',
-                    valid: false,
-                    touched: false,
-                },
-            },
             deliveryMethod: {
                 elementType: 'select',
                 elementConfig: {

@@ -6,8 +6,8 @@ import SidebarToggle from "./SidebarToggle";
 
 const Toolbar = styled.header`
   height: 56px;
-  width: 100%;
-  left: 0;
+  width: var(--app-width);
+  left: cal(100% - var(--app-width));
   top: 0;
   position: fixed;
   display: flex;
@@ -30,6 +30,8 @@ const Toolbar = styled.header`
     .desktop-only{
       display: none;
     }
+    width: 100%;
+    left: 0;
   }
 `;
 
