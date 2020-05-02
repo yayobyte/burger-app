@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Lottie from "react-lottie";
 import { Redirect } from "react-router-dom";
 import Input from "../../components/UI/Input";
 import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { checkFieldValidity, checkFormValidity } from "./../../helpers/";
 import { SIGN_IN, SIGN_UP } from "../../config";
+import * as userData from "../../assets/lotties/user.json";
+import * as authenticationData from "../../assets/lotties/authentication.json";
 
 const LoginContainer = styled.div`
   margin: 20px auto;
@@ -15,6 +18,16 @@ const LoginContainer = styled.div`
   border: 1px solid #EEE;
   padding: 10px;
   box-sizing: border-box;
+  
+  .info {
+    font-weight: 400;
+    font-size: 0.7em;
+    color: darkgrey;
+  }
+  
+  .lottie-user {
+    margin-left: -15px;
+  }
   
   @media(max-width: 500px) {
     width: 100%;
@@ -59,6 +72,22 @@ export default ({ login, isAuthenticated, redirectToPath }) => {
             },
         },
     });
+    const defaultUserOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: userData.default,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
+    const defaultAuthenticationOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: authenticationData.default,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
     const setValue = ({ target: { value }}, key) => {
         const newFormState = { ...loginForm };
         newFormState[key].elementState = {
@@ -83,8 +112,33 @@ export default ({ login, isAuthenticated, redirectToPath }) => {
                 <Spinner/>
                 :
                 <>
-                    <h2>{isSignIn ? "Login" : "Register"}</h2>
-                    <p>Powered by google firebase. Passwords will never be stored</p>
+                    {isSignIn ? (
+                        <div>
+                            <h2>Login</h2>
+                            <div className="lottie-user">
+                                <Lottie options={isSignIn ? defaultUserOptions : defaultAuthenticationOptions}
+                                    height={175}
+                                    width={150}
+                                    isStopped={false}
+                                    isPaused={false}
+                                />
+                            </div>
+                        </div>
+                    )
+                    :
+                    (<div>
+                        <h2>Register</h2>
+                        <div className="lottie-auth">
+                            <Lottie options={defaultAuthenticationOptions}
+                                height={175}
+                                width={150}
+                                isStopped={false}
+                                isPaused={false}
+                            />
+                        </div>
+                    </div>)
+                    }
+                    <p className="info">Powered by <strong>Google Firebase</strong>. Passwords will never be stored</p>
                     <form>
                         {
                             Object.keys(loginForm).map((item) => (

@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
+import Lottie from "react-lottie";
 import { Button, Input } from "../UI";
 import reactReduxConnector from "../../helpers/reactReduxConnector";
 import { purchaseBurger } from "../../store/actions";
 import { checkFieldValidity, checkFormValidity } from "./../../helpers/";
+import * as animationData from "../../assets/lotties/address.json";
 
 const ContactContainer = styled.div`
   margin: 20px auto;
@@ -19,7 +21,7 @@ const ContactContainer = styled.div`
   }
 `;
 
-const ContactData = ({ ingredients, price, purchaseBurger, token, userId }) => {
+const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancelOrder }) => {
     const [ formState, setFormState ] = useState({
         orderForm: {
             name: {
@@ -139,9 +141,23 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId }) => {
         const order = { ingredients, price , customer, userId };
         purchaseBurger(order, token);
     };
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: animationData.default,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
     return (
         <ContactContainer>
-            <h3> Enter your contact details</h3>
+            <h3> Enter your delivery details</h3>
+            <Lottie options={defaultOptions}
+                    height={200}
+                    width={200}
+                    isStopped={false}
+                    isPaused={false}
+            />
             <form>
                 {
                     Object.keys(formState.orderForm).map((item) => (
@@ -157,6 +173,7 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId }) => {
                 }
             </form>
             <hr/>
+            <Button className="danger" click={cancelOrder}>CANCEL</Button>
             <Button className="success" click={order} disabled={!formState.isValid}>Order</Button>
         </ContactContainer>
     )

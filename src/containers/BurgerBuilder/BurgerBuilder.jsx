@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import _ from "lodash";
 import styled from "styled-components";
 import BuildControls from "../../components/BuildControls";
-import Spinner from "../../components/UI/Spinner/Spinner";
 import Burger from "../../components/Burger/Burger";
 import Modal from "../../components/UI/Modal";
 import OrderSummary from "../../components/OrderSummary";
@@ -17,21 +16,18 @@ const Container = styled.div`
 
 const BurgerBuilder = ({
     addIngredient, deleteIngredient, initIngredients,
-    totalPrice, history, ingredients, isAuthenticated,
+    totalPrice, history, ingredients, isAuthenticated, purchased,
 }) => {
-    const [ burgerState, setBurgerState ] = useState({
-        purchasing: false,
-        settingOrder: false,
-    });
+    const [ purchasing, setPurchasing ] = useState(false);
     const purchase = () => {
         if (isAuthenticated){
-            setBurgerState({ ...burgerState, purchasing: true });
+            setPurchasing(true);
         } else {
             history.push('/auth');
         }
     };
     const cancelPurchase = () => {
-        setBurgerState({ ...burgerState, purchasing: false })
+        setPurchasing(false);
     };
     const continuePurchase = () => {
         history.push('/checkout');
@@ -52,17 +48,13 @@ const BurgerBuilder = ({
     return (
         <Container>
             <Burger ingredients={ingredients}/>
-            <Modal show={burgerState.purchasing} onCancel={cancelPurchase}>
-                {burgerState.settingOrder?
-                    <Spinner />
-                    :
-                    <OrderSummary
-                    ingredients={ingredients}
-                    onCancel={cancelPurchase}
-                    onContinue={continuePurchase}
-                    price={totalPrice}
-                    />
-                }
+            <Modal show={purchasing} onCancel={cancelPurchase}>
+                <OrderSummary
+                ingredients={ingredients}
+                onCancel={cancelPurchase}
+                onContinue={continuePurchase}
+                price={totalPrice}
+                />
             </Modal>
             <BuildControls
                 ingredients={ingredients}

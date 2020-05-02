@@ -14,6 +14,10 @@ const BurgerContainer = styled.div`
   font-size: 1.2em;
   overflow-y: scroll;
   
+  .empty-ingredients {
+    font-weight: 400;
+  }
+  
   .ingredient-in {
     animation: ingredientIn ${({timing}) => timing}ms ease-in forwards;
   }
@@ -89,7 +93,9 @@ const Burger = ({ ingredients }) => {
             <TransitionGroup component={null}>
                 {arrayIngredients.length > 0 && arrayIngredients}
             </TransitionGroup>
-            {arrayIngredients.length === 0 && <p>Please add ingredients!</p>}
+            {arrayIngredients.length === 0 && (
+                <p className="empty-ingredients" >Please add ingredients!</p>
+            )}
             <BurgerIngredient type={ingredientTypes.breadBottom} />
         </BurgerContainer>
     );

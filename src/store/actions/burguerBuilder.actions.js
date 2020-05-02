@@ -45,7 +45,7 @@ export const initIngredients = () => {
             })
             .catch(({ response }) => {
                 dispatch(getIngredientsFail(response));
-                dispatch(setErrorMessages(response.data));
+                dispatch(setErrorMessages(response ? response.data : "Unknown error"));
             });
     }
 };

@@ -5,6 +5,10 @@ import {
     setErrorMessages,
 } from "./userMessages.actions"
 
+import {
+    initIngredients,
+} from "./burguerBuilder.actions";
+
 const {
     PURCHASE_BURGER_REQUEST,
     PURCHASE_BURGER_SUCCESS,
@@ -35,6 +39,7 @@ export const purchaseBurger = (orderData, token) => {
         instance.post('/orders.json?auth=' + token , orderData)
             .then(( { data } ) => {
                 dispatch(purchaseBurgerSuccess(data));
+                dispatch(initIngredients());
                 dispatch(setSuccessMessage(`Your burger is being prepared. Order id: ${data.name}`));
             })
             .catch(({ response }) => {
