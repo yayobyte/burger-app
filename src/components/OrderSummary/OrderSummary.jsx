@@ -1,63 +1,74 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../UI/Button'
+import { Button } from '../UI'
+import Typography from "@material-ui/core/Typography";
+import CancelIcon from "@material-ui/icons/Cancel";
+import NextIcon from "@material-ui/icons/DoneOutline";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 const OrderSummaryContainer = styled.div`
-  h2 {
-    font-weight: 300;
-    text-align: center;
-    margin: 12px auto;
-  }
-  
-  ul {
-    list-style: none;
-  }
-  
   hr {
     background-color: #CCC;
     border: none;
     height: 1px;
   }
   
-  .price-label, .price {
-    font-weight: 400;
+  .price-label {
     text-align: center;
     margin: 8px auto;
-    color: #480000;
-  }
-  
-  .price {
-    font-weight: 700;
-    font-size: 1.5em;
   }
   
   .actions {
     display: flex;
     flex-flow: row;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
   }
 `;
 
 const OrderSummary = ({ ingredients, onCancel, onContinue, price }) => {
     const ingredientsSummary = Object.keys(ingredients).map(item => (
-        <li key={item}><span>{item.toUpperCase()}</span>: {ingredients[item]}</li>
+        <ListItem key={item} divider>
+            <Typography variant="body2">{item.toUpperCase()}: {ingredients[item]}</Typography>
+        </ListItem>
     ));
     return (
         <OrderSummaryContainer>
-            <h2>Order Summary</h2>
-            <hr />
-            <p>A delicious burger with the following ingredients: </p>
-            <ul>
+            <Typography variant="h4" color="secondary">
+                Order Summary
+            </Typography>
+            <br />
+            <Typography variant="body2">
+                A delicious burger with the following ingredients:
+            </Typography>
+            <List>
                 {ingredientsSummary}
-            </ul>
-            <p className="price-label">Total Price</p>
-            <p className="price">${price.toFixed(2)}</p>
-            <p>Continue to checkout?</p>
+            </List>
+            <Typography variant="subtitle1" color="secondary" className="price-label">
+                Total Price
+            </Typography>
+            <Typography variant="h4" color="primary" align="right">
+                ${price.toFixed(2)}
+            </Typography>
             <hr />
             <div className="actions">
-                <Button className='danger' click={onCancel}>Cancel</Button>
-                <Button className='success' click={onContinue}>Continue</Button>
+                <Button
+                    onClick={onCancel}
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<CancelIcon />}
+                >
+                    Cancel
+                </Button>
+                <Button
+                    onClick={onContinue}
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<NextIcon />}
+                >
+                    Continue
+                </Button>
             </div>
         </OrderSummaryContainer>
     );

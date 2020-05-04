@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import Lottie from "react-lottie";
-import { Button, Input } from "../UI";
+import FoodIcon from "@material-ui/icons/Fastfood";
+import CancelIcon from "@material-ui/icons/Cancel";
+import { Input, Button } from "../UI";
 import reactReduxConnector from "../../helpers/reactReduxConnector";
 import { purchaseBurger } from "../../store/actions";
 import { checkFieldValidity, checkFormValidity } from "./../../helpers/";
@@ -16,6 +18,13 @@ const ContactContainer = styled.div`
   padding: 10px;
   box-sizing: border-box;
   
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 15px 0;
+  }
+  
   @media(max-width: 500px) {
     width: 100%;
   }
@@ -28,7 +37,7 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeholder: 'Your Name',
+                    label: 'Your Name',
                 },
                 validation: {
                     required: true,
@@ -43,7 +52,7 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeholder: 'Street',
+                    label: 'Street',
                 },
                 validation: {
                     required: true,
@@ -58,7 +67,7 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeholder: 'ZIP',
+                    label: 'ZIP',
                 },
                 validation: {
                     required: true,
@@ -75,7 +84,7 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeholder: 'Your Country',
+                    label: 'Your Country',
                 },
                 validation: {
                     required: true,
@@ -93,6 +102,7 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
                         {value: 'fastest', displayValue: 'Fastest'},
                         {value: 'cheapest', displayValue: 'Cheapest'}
                     ],
+                    label: "Delivery Method"
                 },
                 validation: {},
                 elementState: {
@@ -157,9 +167,26 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
                     ))
                 }
             </form>
-            <hr/>
-            <Button className="danger" click={cancelOrder}>CANCEL</Button>
-            <Button className="success" click={order} disabled={!formState.isValid}>Order</Button>
+            <div className="buttons">
+                <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={cancelOrder}
+                    startIcon={<CancelIcon />}
+                >
+                    CANCEL
+                </Button>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={order}
+                    disabled={!formState.isValid}
+                    startIcon={<FoodIcon />}
+                >
+                    ORDER
+                </Button>
+            </div>
+
         </ContactContainer>
     )
 };

@@ -6,6 +6,7 @@ import SideDrawer from "../../components/UI/SideDrawer/SideDrawer";
 
 const Main = styled.main`
   margin-top: 72px;
+  width: 100%;
 `;
 
 const Layout = ({ children, isAuthenticated }) => {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect}  from 'react';
 import styled from "styled-components";
+import Typography from "@material-ui/core/Typography";
 import Hoc from "./Hoc";
+import { successColor, errorColor } from "../../config/theme";
 import { Modal, Button, Spinner } from "../UI";
 
 const ErrorContainer = styled.div`
@@ -31,22 +33,47 @@ const withUserMessages = (WrappedComponent) => (
         return (
             <Hoc>
                 <Modal onCancel={closeModal} show={openModal && !!error}>
-                    <ErrorContainer style={{ color: "#650000"}} >
-                        <h3>Oops we got an error!</h3>
-                        <p>{`${error && error.code} - ${error && error.message}`}</p>
+                    <ErrorContainer style={{ color: errorColor, textAlign: "center" }}>
+                        <Typography
+                            variant="h3"
+                            align="center"
+                        >
+                            Error!
+                        </Typography>
+                        <br />
+                        <Typography variant="body1">We got an error</Typography>
+                        <Typography variant="body1">{`${error && error.code} - ${error && error.message}`}</Typography>
                         <hr />
                         <div className="actions">
-                            <Button className='danger' click={closeModal}>Close</Button>
+                            <Button
+                                onClick={closeModal}
+                                variant="outlined"
+                                color="secondary"
+                            >
+                                Close
+                            </Button>
                         </div>
                     </ErrorContainer>
                 </Modal>
                 <Modal onCancel={closeModal} show={openModal && !!successMessage}>
-                    <ErrorContainer style={{ color: "#295F00"}}>
-                        <h3>Success!</h3>
-                        <p>{successMessage}</p>
+                    <ErrorContainer style={{ color: successColor, textAlign: "center" }}>
+                        <Typography
+                            variant="h3"
+                            align="center"
+                        >
+                            Success!
+                        </Typography>
+                        <br />
+                        <Typography variant="body1">{successMessage}</Typography>
                         <hr />
                         <div className="actions">
-                            <Button className='success' click={closeModal}>Close</Button>
+                            <Button
+                                onClick={closeModal}
+                                variant="outlined"
+                                color="secondary"
+                            >
+                                Close
+                            </Button>
                         </div>
                     </ErrorContainer>
                 </Modal>

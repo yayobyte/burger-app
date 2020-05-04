@@ -1,55 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 const InputField = styled.div`
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
   
-  label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 8px;
-  }
-  
-  .input-element {
-    outline: none;
-    border: 1px solid #ccc;
-    background-color: white;
-    font: inherit;
-    padding: 6px 10px;
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .input-element:focus {
-    outline: none;
-    background-color: #ccc;
-  }
-  
-  .invalid {
-    border: 1px solid red;
-    background-color: #FDA49A;
-  }
-  
-  p.input-error {
-    color: red;
-    font-size: 0.7em;
-    text-align: left;
-    margin: 5px 0 0 0;
-    visibility: hidden;
-    
-  }
-  
-  p.show-error {
-    visibility: visible;
-  }
-  
 `;
 
 const HTMLInput = ({ type, name, config, onChange, elementState }) => {
     const { value, touched, valid } = elementState;
+    const { variant } = config;
     const classes = ['input-element', !valid && touched ? 'invalid' : ''];
     switch (type) {
         case "textarea" :
@@ -61,37 +25,36 @@ const HTMLInput = ({ type, name, config, onChange, elementState }) => {
                 onChange={onChange}
             />;
         case "select":
-            return <select
+            return <Select
                 name={name}
                 value={value}
                 onChange={onChange}
-                className={classes.join(' ')}
+                variant={variant || "outlined"}
+                fullWidth
             >
                 {config && Object.keys(config.options).map(item => (
-                    <option
+                    <MenuItem
                         value={config.options[item].value}
                         key={item}
                     >
                         {config.options[item].displayValue}
-                    </option>
+                    </MenuItem>
                 ))}
-            </select>;
+            </Select>;
         default:
-            return <input
-                {...config}
-                name={name}
-                value={value}
-                className={classes.join(' ')}
-                onChange={onChange}
-            />;
+            return (
+                <TextField
+                    {...config}
+                    variant={variant || "outlined"}
+                    fullWidth
+                    error={!valid && touched}
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    helperText={!valid && touched ? "Incorrect entry." : ""}
+                />
+            );
     }
-};
-
-const ErrorMessage = ({ valid, touched }) => {
-    const classes = ["input-error", (!valid && touched) ? "show-error" : ""];
-    return (
-        <p className={classes.join(" ")}>Please enter a valid input!</p>
-    )
 };
 
 const Input = ({ name, type, config, onChange, elementState }) => {
@@ -105,7 +68,6 @@ const Input = ({ name, type, config, onChange, elementState }) => {
                 onChange={onChange}
                 elementState={elementState}
             />
-            <ErrorMessage valid={elementState.valid} touched={elementState.touched} />
         </InputField>
     )
 };

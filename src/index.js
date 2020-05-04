@@ -1,56 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import thunk from "redux-thunk";
-import styled from "styled-components";
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom'
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
-import App from './App';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+
 import * as serviceWorker from './serviceWorker';
-import { burgerBuilderReducer, orderReducer, authReducer, userMessagesReducer } from './store/reducers/';
+
+import App from './App';
 import Initializer from "./containers/Initializer";
 
-const AppContainer = styled.div`
-  --app-width: 500px;
-  --brown: #703B09;
-  max-width: var(--app-width);
-  margin: auto;
-  
-  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  
-  @media (min-width: 500px) {
-    border: 2px solid var(--brown);
-  }
-`;
-
-const composer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
-
-const composeEnhancers = process.env.NODE_ENV === 'development' ? composer : (null || compose);
-const rootReducer = combineReducers({
-    burgerBuilder: burgerBuilderReducer,
-    order: orderReducer,
-    auth: authReducer,
-    userMessages: userMessagesReducer,
-});
-
-const store = createStore(
-    rootReducer,
-    composeEnhancers(
-        applyMiddleware(thunk)
-    ),
-);
+import theme from "./config/theme";
+import AppStyles from "./config/appStyles";
+import store from "./config/store";
 
 const app = (
     <Provider store={store}>
         <BrowserRouter>
-            <Initializer />
-            <AppContainer>
-                <App />
-            </AppContainer>
+            <MuiThemeProvider theme={theme}>
+                <Initializer />
+                <AppStyles>
+                    <App />
+                </AppStyles>
+            </MuiThemeProvider>
         </BrowserRouter>
     </Provider>
 );
