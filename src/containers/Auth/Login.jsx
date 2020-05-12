@@ -6,13 +6,12 @@ import LoginIcon from "@material-ui/icons/LockOpen";
 import RegisterIcon from "@material-ui/icons/Add";
 import { Redirect } from "react-router-dom";
 import { Input, Button } from "../../components/UI";
-import Spinner from "../../components/UI/Spinner/Spinner";
 import { checkFieldValidity, checkFormValidity } from "./../../helpers/";
 import { SIGN_IN, SIGN_UP } from "../../config";
 import * as userData from "../../assets/lotties/user.json";
 import * as authenticationData from "../../assets/lotties/authentication.json";
 
-const LoginContainer = styled.div`
+export const LoginContainer = styled.div`
   margin: 20px auto;
   width: 80%;
   padding: 10px;
@@ -30,6 +29,7 @@ const LoginContainer = styled.div`
     text-align: center;
   }
   .info {
+    margin: 15px 0;
     font-weight: 400;
     font-size: 0.7em;
     color: darkgrey;
@@ -49,7 +49,6 @@ const LoginContainer = styled.div`
 `;
 
 export default ({ login, isAuthenticated, redirectToPath }) => {
-    const loading = false;
     const [formValidity, setFormValidity] = useState(false);
     const [isSignIn, setIsSignIn] = useState(true);
     const [loginForm, setLoginForm] = useState({
@@ -58,6 +57,7 @@ export default ({ login, isAuthenticated, redirectToPath }) => {
             elementConfig: {
                 type: 'text',
                 label: 'Email Address',
+                id: "email-input",
             },
             validation: {
                 required: true,
@@ -74,6 +74,7 @@ export default ({ login, isAuthenticated, redirectToPath }) => {
             elementConfig: {
                 type: 'password',
                 label: 'Password',
+                id: 'password-input',
             },
             validation: {
                 required: true,
@@ -122,74 +123,72 @@ export default ({ login, isAuthenticated, redirectToPath }) => {
     }
     return (
         <LoginContainer>
-            { loading ?
-                <Spinner/>
-                :
-                <>
-                    {isSignIn ? (
-                        <div>
-                            <Typography variant="h2" color="secondary" align="center">Login</Typography>
-                            <div className="lottie-user">
-                                <Lottie options={isSignIn ? defaultUserOptions : defaultAuthenticationOptions}
-                                    height={175}
-                                    width={150}
-                                    isStopped={false}
-                                    isPaused={false}
-                                />
-                            </div>
-                        </div>
-                    )
-                    :
-                    (<div>
-                        <Typography variant="h2" color="secondary" align="center">Register</Typography>
-                        <div className="lottie-auth">
-                            <Lottie options={defaultAuthenticationOptions}
-                                height={175}
-                                width={150}
-                                isStopped={false}
-                                isPaused={false}
-                            />
-                        </div>
-                    </div>)
-                    }
-                    <Paper elevation={3} className="login-paper">
-                        <Typography className="info" align="center">
-                            Powered by <strong>Google Firebase</strong>. Passwords will never be stored
-                        </Typography>
-                        <form>
-                            {
-                                Object.keys(loginForm).map((item) => (
-                                    <Input
-                                        key={item}
-                                        name={item}
-                                        type={loginForm[item].elementType}
-                                        config={loginForm[item].elementConfig}
-                                        elementState={loginForm[item].elementState}
-                                        onChange={(target) => setValue(target, item)}
-                                    />
-                                ))
-                            }
-                        </form>
-                        <Button
-                            onClick={submit}
-                            disabled={!formValidity}
-                            variant="contained"
-                            color="secondary"
-                            startIcon={isSignIn ? <LoginIcon /> : <RegisterIcon />}
-                            fullWidth={false}
-                            size="large"
-                        >
-                            {isSignIn ? "Login" : "Register"}
-                        </Button>
-                    </Paper>
-                    <div className="buttons" >
-                        <Button onClick={() => setIsSignIn(!isSignIn)} color="primary">
-                            Switch to {isSignIn ? 'Register' : "Login"}
-                        </Button>
+            {isSignIn ? (
+                <div>
+                    <Typography variant="h2" color="secondary" align="center">Login</Typography>
+                    <div className="lottie-user">
+                        <Lottie options={defaultUserOptions}
+                            height={175}
+                            width={150}
+                            isStopped={false}
+                            isPaused={false}
+                        />
                     </div>
-                </>
+                </div>
+            )
+            :
+            (<div>
+                <Typography id="header" variant="h2" color="secondary" align="center">Register</Typography>
+                <div className="lottie-auth">
+                    <Lottie options={defaultAuthenticationOptions}
+                        height={175}
+                        width={150}
+                        isStopped={false}
+                        isPaused={false}
+                    />
+                </div>
+            </div>)
             }
-
+            <Paper elevation={3} className="login-paper">
+                <Typography className="info" align="center">
+                    Powered by <strong>Google Firebase</strong>. Passwords will never be stored
+                </Typography>
+                <form>
+                    {
+                        Object.keys(loginForm).map((item) => (
+                            <Input
+                                key={item}
+                                name={item}
+                                type={loginForm[item].elementType}
+                                config={loginForm[item].elementConfig}
+                                elementState={loginForm[item].elementState}
+                                onChange={(target) => setValue(target, item)}
+                            />
+                        ))
+                    }
+                </form>
+                <Button
+                    id="login-button"
+                    onClick={submit}
+                    disabled={!formValidity}
+                    variant="contained"
+                    color="secondary"
+                    startIcon={isSignIn ? <LoginIcon /> : <RegisterIcon />}
+                    fullWidth={false}
+                    size="large"
+                >
+                    {isSignIn ? "Login" : "Register"}
+                </Button>
+            </Paper>
+            <div className="buttons" >
+                <Button
+                    id="switch-button"
+                    onClick={() => setIsSignIn(!isSignIn)}
+                    color="primary"
+                >
+                    Switch to {isSignIn ? 'Register' : "Login"}
+                </Button>
+            </div>
         </LoginContainer>
     );
 };
