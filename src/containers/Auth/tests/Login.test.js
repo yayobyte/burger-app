@@ -18,6 +18,8 @@ const props = {
 };
 
 describe('<Login />', () => {
+    const email = "orco@gmail.com";
+    const password = "password123";
     it("Should redirect when is logged in", () => {
         const wrapper = shallow(<Login {...props} />);
         expect(wrapper.find(Redirect).length).toEqual(1);
@@ -35,23 +37,23 @@ describe('<Login />', () => {
     it("should login", () => {
         const wrapper = mount(<Login {...props} isAuthenticated={false} />);
         const emailInput = wrapper.find("input#email-input");
-        emailInput.simulate("change", { target: { value: "hello@hello.com" } })
+        emailInput.simulate("change", { target: { value: email } })
         const passwordInput = wrapper.find("input#password-input");
-        passwordInput.simulate("change", { target: { value: "password123" } })
+        passwordInput.simulate("change", { target: { value: password } })
         const loginButton = wrapper.find("#login-button").at(0);
         loginButton.simulate("click");
-        expect(props.login).toHaveBeenCalledWith("hello@hello.com", "password123", SIGN_IN);
+        expect(props.login).toHaveBeenCalledWith(email, password, SIGN_IN);
     });
     it("should register", () => {
         const wrapper = mount(<Login {...props} isAuthenticated={false} />);
         const button = wrapper.find("#switch-button").at(0);
         button.simulate("click");
         const emailInput = wrapper.find("input#email-input");
-        emailInput.simulate("change", { target: { value: "hello@hello.com" } })
+        emailInput.simulate("change", { target: { value: email } })
         const passwordInput = wrapper.find("input#password-input");
-        passwordInput.simulate("change", { target: { value: "password123" } })
+        passwordInput.simulate("change", { target: { value: password } })
         const loginButton = wrapper.find("#login-button").at(0);
         loginButton.simulate("click");
-        expect(props.login).toHaveBeenCalledWith("hello@hello.com", "password123", SIGN_UP);
+        expect(props.login).toHaveBeenCalledWith(email, password, SIGN_UP);
     });
 });
