@@ -28,6 +28,12 @@ const logoutAction = () => {
     });
 };
 
+const loginSuccess = ({ idToken, localId }) => ({
+    type: LOGIN_SUCCESS,
+    idToken,
+    localId,
+});
+
 export const logout = () => {
     return (dispatch) => {
         localStorage.removeItem("idToken");
@@ -52,12 +58,6 @@ const checkAuthTimeout = (expirationTime) => {
         }, expirationTime * 1000);
     }
 };
-
-const loginSuccess = ({ idToken, localId }) => ({
-    type: LOGIN_SUCCESS,
-    idToken,
-    localId,
-});
 
 export const checkAuthState = () => {
     return (dispatch) => {
@@ -103,3 +103,10 @@ export const login = (email, password, method) => {
             })
     }
 };
+
+export {
+    loginRequest,
+    loginFail,
+    loginSuccess,
+    logoutAction,
+}

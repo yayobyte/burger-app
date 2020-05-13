@@ -7,7 +7,7 @@ import {
 
 import {
     initIngredients,
-} from "./burguerBuilder.actions";
+} from "./burgerBuilder.actions";
 
 const {
     PURCHASE_BURGER_REQUEST,

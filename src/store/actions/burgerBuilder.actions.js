@@ -12,12 +12,12 @@ import {
     setErrorMessages,
 } from "./userMessages.actions"
 
-export const addIngredient = (ingredientName) => ({
+const addIngredient = (ingredientName) => ({
     type: ADD_INGREDIENT,
     ingredientName,
 });
 
-export const removeIngredient = (ingredientName) => ({
+const removeIngredient = (ingredientName) => ({
     type: REMOVE_INGREDIENT,
     ingredientName,
 });
@@ -29,10 +29,10 @@ const getIngredientsSuccess = (ingredients) => ({
 
 const getIngredientsFail = (error) => ({
     type: GET_INGREDIENTS_FAIL,
-    error: error,
+    error,
 });
 
-export const getIngredientsRequest = () => ({
+const getIngredientsRequest = () => ({
     type: GET_INGREDIENTS_REQUEST,
 });
 
@@ -49,3 +49,11 @@ export const initIngredients = () => {
             });
     }
 };
+
+export {
+    addIngredient,
+    removeIngredient,
+    getIngredientsSuccess,
+    getIngredientsFail,
+    getIngredientsRequest,
+}
