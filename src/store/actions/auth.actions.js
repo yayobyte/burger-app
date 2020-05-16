@@ -109,4 +109,5 @@ export {
     loginFail,
     loginSuccess,
     logoutAction,
+    silentLogout,
 }

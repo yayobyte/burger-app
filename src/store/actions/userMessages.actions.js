@@ -4,16 +4,22 @@ import {
     SET_SUCCESS_MESSAGES,
 } from "./actionTypes.actions";
 
-export const removeErrorMessages = () => ({
+const removeErrorMessages = () => ({
     type: REMOVE_MESSAGES,
 });
 
-export const setErrorMessages = (error) => ({
+const setErrorMessages = (error) => ({
     type: SET_ERROR_MESSAGES,
     error,
 });
 
-export const setSuccessMessage = (successMessage) => ({
+const setSuccessMessage = (successMessage) => ({
     type: SET_SUCCESS_MESSAGES,
     successMessage,
 });
+
+export {
+    removeErrorMessages,
+    setErrorMessages,
+    setSuccessMessage,
+}

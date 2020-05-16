@@ -1,9 +1,11 @@
+import instance from "../../../server";
 import {
     addIngredient,
     removeIngredient,
     getIngredientsSuccess,
     getIngredientsFail,
     getIngredientsRequest,
+    initIngredients,
 } from "../burgerBuilder.actions";
 import {
     ADD_INGREDIENT,
@@ -12,6 +14,8 @@ import {
     GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAIL,
 } from "../actionTypes.actions";
+
+jest.mock("../../../server");
 
 describe("Burger Actions", () => {
     it("Should add ingredient", () => {
@@ -38,4 +42,11 @@ describe("Burger Actions", () => {
         const action = getIngredientsRequest();
         expect(action).toEqual({ type: GET_INGREDIENTS_REQUEST });
     })
+    it("Should initi ingredients", () => {
+        const dispatch = jest.fn();
+        const ingredients = ["one", "two"];
+        instance.get.mockResolvedValue(ingredients);
+        initIngredients()(dispatch);
+        expect(dispatch).toHaveBeenCalledWith(getIngredientsRequest());
+    });
 });

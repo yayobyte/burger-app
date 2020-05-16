@@ -49,7 +49,7 @@ export const purchaseBurger = (orderData, token) => {
     })
 };
 
-export const purchaseInit = () => ({
+const purchaseInit = () => ({
     type: PURCHASE_INIT,
 });
 
@@ -80,4 +80,14 @@ export const getOrders = (token, userId) => {
                 dispatch(setErrorMessages(response));
             })
     });
+}
+
+export {
+    purchaseBurgerSuccess,
+    purchaseBurgerFail,
+    purchaseBurgerRequest,
+    purchaseInit,
+    getOrdersReq,
+    getOrdersSuc,
+    getOrdersFail,
 }
