@@ -198,6 +198,7 @@ export default ({ login, isAuthenticated, redirectToPath }) => {
             </Paper>
             <div className="buttons" >
                 <Button
+                    data-testid={isSignIn ? 'btn-switch-to-register' : 'btn-switch-to-login'}
                     id="switch-button"
                     onClick={() => setIsSignIn(!isSignIn)}
                     color="primary"

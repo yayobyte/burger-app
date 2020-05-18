@@ -3,7 +3,7 @@ import { render, waitForElement, fireEvent, prettyDOM } from "@testing-library/r
 import Index from "./index";
 
 const login = async () => {
-    const { queryAllByTestId, getByTestId, getAllByText, container } = render(<Index />);
+    const { queryAllByTestId, getByTestId, getAllByText } = render(<Index />);
     const loginLink = await waitForElement(() => queryAllByTestId("nav-login"));
     fireEvent.click(loginLink[0]);
     const loginHeader = await waitForElement(() => getByTestId('login-header'));
@@ -25,6 +25,17 @@ const loginCases = () => describe("IntTests: Login cases", () => {
         const { getByTestId } = render(<Index />);
         const orderButton = await waitForElement(() => getByTestId('order-button'));
         expect(orderButton).toBeDisabled();
+    });
+    it("Should show register screen", async () => {
+        const { queryAllByTestId, getByTestId } = render(<Index />);
+        const loginLink = await waitForElement(() => queryAllByTestId("nav-login"));
+        fireEvent.click(loginLink[0]);
+        const loginHeader = await waitForElement(() => getByTestId('login-header'));
+        expect(loginHeader.innerHTML).toEqual("Login");
+        const switchToRegisterButton = await waitForElement(() => getByTestId('btn-switch-to-register'));
+        fireEvent.click(switchToRegisterButton);
+        const registerHeader = await waitForElement(() => getByTestId('register-header'));
+        expect(registerHeader.innerHTML).toEqual("Register");
     });
     it("Should login", async () => {
         await login();

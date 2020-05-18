@@ -101,6 +101,9 @@
     "roots": [
       "<rootDir>/src"
     ],
+    "coveragePathIgnorePatterns": [
+      "src/__inttests__"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 80,
