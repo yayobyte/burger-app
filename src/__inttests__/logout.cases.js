@@ -1,10 +1,9 @@
-import {fireEvent, render, waitForElement} from "@testing-library/react";
-import Index from "./index";
-import React from "react";
+import { fireEvent, waitForElement } from "@testing-library/react";
+import renderApp from "./bootstrapper";
 
 const logoutCases = () => describe("IntTests: Logout cases", () => {
     it("Should logout", async () => {
-        const { queryAllByTestId, getAllByText } = render(<Index />);
+        const { queryAllByTestId, getAllByText } = renderApp();
         const logoutLink = await waitForElement(() => queryAllByTestId("nav-logout"));
         fireEvent.click(logoutLink[0]);
         const closeModalButton = await waitForElement(() => getAllByText('Close'))

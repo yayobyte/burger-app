@@ -1,10 +1,9 @@
-import { fireEvent, render, waitForElement } from "@testing-library/react";
-import Index from "./index";
-import React from "react";
+import { fireEvent, waitForElement } from "@testing-library/react";
+import renderApp from "./bootstrapper";
 
 const orderCases = () => describe("IntTests: Orders cases", () => {
     it("Should show orders", async () => {
-        const { queryAllByTestId, getAllByText } = render(<Index />);
+        const { queryAllByTestId, getAllByText } = renderApp();
 
         //Go to orders
         const loginLink = await waitForElement(() => queryAllByTestId("nav-orders"));

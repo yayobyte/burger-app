@@ -1,10 +1,10 @@
-import { render, waitForElement, fireEvent } from "@testing-library/react";
-import Index from "./index";
-import React from "react";
+import { waitForElement, fireEvent } from "@testing-library/react";
+import renderApp from "./bootstrapper";
+import { buildBurger } from "./burgerBuilder.cases";
 
 const checkoutCases = () => describe("IntTests: Checkout cases", () => {
     it("Should fill checkout information", async () => {
-        const { getByTestId, getAllByText } = render(<Index />);
+        const { getByTestId, getAllByText } = renderApp();
 
         const name = await waitForElement(() => document.getElementById('name-input'));
         const street = await waitForElement(() => document.getElementById('street-input'));
@@ -23,13 +23,29 @@ const checkoutCases = () => describe("IntTests: Checkout cases", () => {
         fireEvent.change(zipcode, { target: { value: "12345" }});
         expect(orderButton).toBeEnabled();
 
-        //Purchase Burger
+        // Purchase Burger
         fireEvent.click(orderButton);
 
         //Modal
         const closeModalButton = await waitForElement(() => getAllByText('Close'));
         expect(closeModalButton[0]).toBeDefined();
         fireEvent.click(closeModalButton[0]);
+    });
+    it("Should cancel checkout", async () => {
+        await buildBurger();
+
+        //Order Now
+        const { getByTestId, getAllByText } = renderApp();
+        const orderButton = await waitForElement(() => getAllByText('ORDER NOW'));
+        fireEvent.click(orderButton[0]);
+
+        //Continue to checkout
+        const continueButton = await waitForElement(() => getByTestId('continue-summary-button'));
+        fireEvent.click(continueButton);
+
+        //Cancel order
+        const cancelOrderButton = await waitForElement(() => getByTestId('cancel-order'));
+        fireEvent.click(cancelOrderButton);
     });
 });
 

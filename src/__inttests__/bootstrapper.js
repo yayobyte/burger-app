@@ -7,8 +7,9 @@ import Initializer from "../containers/Initializer";
 import AppStyles from "../config/appStyles";
 import App from "../App";
 import React from "react";
+import {render} from "@testing-library/react";
 
-const Index = () => (
+const MainApp = () => (
     <Provider store={store}>
         <BrowserRouter>
             <MuiThemeProvider theme={theme}>
@@ -21,4 +22,14 @@ const Index = () => (
     </Provider>
 );
 
-export default Index;
+const renderApp = () => {
+    const { getByTestId, queryAllByTestId, getAllByText, container } = render(<MainApp />);
+    return {
+        getByTestId,
+        queryAllByTestId,
+        getAllByText,
+        container,
+    };
+};
+
+export default renderApp;

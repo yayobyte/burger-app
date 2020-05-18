@@ -1,9 +1,8 @@
-import React from "react";
-import { render, waitForElement, fireEvent, prettyDOM } from "@testing-library/react";
-import Index from "./index";
+import { waitForElement, fireEvent } from "@testing-library/react";
+import renderApp from "./bootstrapper";
 
 const login = async () => {
-    const { queryAllByTestId, getByTestId, getAllByText } = render(<Index />);
+    const { queryAllByTestId, getByTestId, getAllByText } = renderApp();
     const loginLink = await waitForElement(() => queryAllByTestId("nav-login"));
     fireEvent.click(loginLink[0]);
     const loginHeader = await waitForElement(() => getByTestId('login-header'));
@@ -22,12 +21,12 @@ const login = async () => {
 
 const loginCases = () => describe("IntTests: Login cases", () => {
     it("Should show login screen", async () => {
-        const { getByTestId } = render(<Index />);
+        const { getByTestId } = renderApp();
         const orderButton = await waitForElement(() => getByTestId('order-button'));
         expect(orderButton).toBeDisabled();
     });
     it("Should show register screen", async () => {
-        const { queryAllByTestId, getByTestId } = render(<Index />);
+        const { queryAllByTestId, getByTestId } = renderApp();
         const loginLink = await waitForElement(() => queryAllByTestId("nav-login"));
         fireEvent.click(loginLink[0]);
         const loginHeader = await waitForElement(() => getByTestId('login-header'));
