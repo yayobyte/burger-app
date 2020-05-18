@@ -35,6 +35,29 @@ const burgerBuilderCases = () => describe("IntTests: BurgerBuilder cases", () =>
         fireEvent.click(saladMinusButton);
         expect(orderButton).toBeDisabled();
     });
+    it("Should show a summary of the order", async () => {
+        const { getByTestId } = render(<Index />);
+        const baconPlusButton = await waitForElement(() => getByTestId('button-plus-bacon'));
+        const cheesePlusButton = await waitForElement(() => getByTestId('button-plus-cheese'));
+
+        const orderButton = await waitForElement(() => getByTestId('order-button'))
+        expect(orderButton).toBeDisabled();
+
+        //Add some ingredients and click Order Button
+        fireEvent.click(baconPlusButton);
+        fireEvent.click(cheesePlusButton);
+        expect(orderButton).toBeEnabled();
+        fireEvent.click(orderButton);
+
+        //Go back to builder and open again the modal confirmation
+        const cancelButton = await waitForElement(() => getByTestId('cancel-summary-button'));
+        fireEvent.click(cancelButton);
+        fireEvent.click(orderButton);
+
+        //Continue to checkout
+        const continueButton = await waitForElement(() => getByTestId('continue-summary-button'));
+        fireEvent.click(continueButton);
+    });
 });
 
 export default burgerBuilderCases;

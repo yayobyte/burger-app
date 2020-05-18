@@ -35,7 +35,7 @@ const OrderSummary = ({ ingredients, onCancel, onContinue, price }) => {
     ));
     return (
         <OrderSummaryContainer>
-            <Typography variant="h4" color="secondary">
+            <Typography variant="h4" color="secondary" data-testid="order-summary-header">
                 Order Summary
             </Typography>
             <br />
@@ -54,6 +54,7 @@ const OrderSummary = ({ ingredients, onCancel, onContinue, price }) => {
             <hr />
             <div className="actions">
                 <Button
+                    data-testid="cancel-summary-button"
                     onClick={onCancel}
                     variant="outlined"
                     color="primary"
@@ -62,6 +63,7 @@ const OrderSummary = ({ ingredients, onCancel, onContinue, price }) => {
                     Cancel
                 </Button>
                 <Button
+                    data-testid="continue-summary-button"
                     onClick={onContinue}
                     variant="contained"
                     color="secondary"

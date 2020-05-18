@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Lottie from "react-lottie";
 import FoodIcon from "@material-ui/icons/Fastfood";
 import CancelIcon from "@material-ui/icons/Cancel";
+import Typography from "@material-ui/core/Typography";
 import { Input, Button } from "../UI";
 import reactReduxConnector from "../../helpers/reactReduxConnector";
 import { purchaseBurger } from "../../store/actions";
@@ -38,6 +39,7 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
                 elementConfig: {
                     type: 'text',
                     label: 'Your Name',
+                    id: "name-input",
                 },
                 validation: {
                     required: true,
@@ -53,6 +55,7 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
                 elementConfig: {
                     type: 'text',
                     label: 'Street',
+                    id: "street-input",
                 },
                 validation: {
                     required: true,
@@ -67,7 +70,8 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    label: 'ZIP',
+                    label: 'Zipcode',
+                    id: "zipcode-input",
                 },
                 validation: {
                     required: true,
@@ -85,6 +89,7 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
                 elementConfig: {
                     type: 'text',
                     label: 'Your Country',
+                    id: "country-input",
                 },
                 validation: {
                     required: true,
@@ -102,7 +107,8 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
                         {value: 'fastest', displayValue: 'Fastest'},
                         {value: 'cheapest', displayValue: 'Cheapest'}
                     ],
-                    label: "Delivery Method"
+                    label: "Delivery Method",
+                    id: "delivery-method-input",
                 },
                 validation: {},
                 elementState: {
@@ -146,7 +152,13 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
     };
     return (
         <ContactContainer>
-            <h3> Enter your delivery details</h3>
+            <Typography
+                data-testid="delivery-details-header"
+                variant="h4"
+                color="secondary"
+            >
+                Delivery Details
+            </Typography>
             <Lottie options={defaultOptions}
                     height={200}
                     width={200}
@@ -169,6 +181,7 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
             </form>
             <div className="buttons">
                 <Button
+                    data-testid="cancel-order"
                     variant="outlined"
                     color="primary"
                     onClick={cancelOrder}
@@ -177,6 +190,7 @@ const ContactData = ({ ingredients, price, purchaseBurger, token, userId, cancel
                     CANCEL
                 </Button>
                 <Button
+                    data-testid="set-order"
                     variant="contained"
                     color="secondary"
                     onClick={order}
