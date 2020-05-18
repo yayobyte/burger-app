@@ -42,9 +42,9 @@ const ListItem = styled.li`
   }
 `;
 
-const NavigationItem = ({ children, link, exact }) => (
+const NavigationItem = ({ children, link, exact, id }) => (
     <ListItem>
-        <NavLink to={link} activeClassName="Active" exact={exact}>
+        <NavLink to={link} activeClassName="Active" exact={exact} data-testid={`nav-${id}`}>
             {children}
         </NavLink>
     </ListItem>

@@ -22,7 +22,8 @@ const burgerBuilderCases = () => describe("IntTests: BurgerBuilder cases", () =>
     it("Should disable the order button when there is not ingredients added", async () => {
         const { getByTestId } = render(<Index />);
         const orderButton = await waitForElement(() => getByTestId('order-button'))
-        
+        const price = await waitForElement(() => getByTestId('burger-builder-price'));
+        console.log("Price: ", price.innerHTML);
 
         const baconMinusButton = await waitForElement(() => getByTestId('button-minus-bacon'));
         const cheeseMinusButton = await waitForElement(() => getByTestId('button-minus-cheese'));

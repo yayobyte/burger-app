@@ -125,7 +125,14 @@ export default ({ login, isAuthenticated, redirectToPath }) => {
         <LoginContainer>
             {isSignIn ? (
                 <div>
-                    <Typography variant="h2" color="secondary" align="center">Login</Typography>
+                    <Typography
+                        data-testid="login-header"
+                        variant="h2"
+                        color="secondary"
+                        align="center"
+                    >
+                        Login
+                    </Typography>
                     <div className="lottie-user">
                         <Lottie options={defaultUserOptions}
                             height={175}
@@ -138,7 +145,15 @@ export default ({ login, isAuthenticated, redirectToPath }) => {
             )
             :
             (<div>
-                <Typography id="header" variant="h2" color="secondary" align="center">Register</Typography>
+                <Typography
+                    data-testid="register-header"
+                    id="header"
+                    variant="h2"
+                    color="secondary"
+                    align="center"
+                >
+                    Register
+                </Typography>
                 <div className="lottie-auth">
                     <Lottie options={defaultAuthenticationOptions}
                         height={175}
@@ -168,6 +183,7 @@ export default ({ login, isAuthenticated, redirectToPath }) => {
                     }
                 </form>
                 <Button
+                    data-testid={isSignIn ? 'login-button' : 'register-button'}
                     id="login-button"
                     onClick={submit}
                     disabled={!formValidity}

@@ -21,8 +21,8 @@ const Navigation = ({ isAuthenticated }) => (
         <NavigationItem link="/" exact >Burger Builder</NavigationItem>
         {isAuthenticated && <NavigationItem link="/orders" >Orders</NavigationItem>}
         {isAuthenticated
-            ? <NavigationItem link="/logout" >Logout</NavigationItem>
-            : <NavigationItem link="/auth" >Login</NavigationItem>
+            ? <NavigationItem link="/logout" id="logout">Logout</NavigationItem>
+            : <NavigationItem link="/auth" id="login">Login</NavigationItem>
         }
     </UnorderedList>
 );

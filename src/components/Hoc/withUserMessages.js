@@ -46,6 +46,7 @@ const withUserMessages = (WrappedComponent) => (
                         <hr />
                         <div className="actions">
                             <Button
+                                data-testid="close-error-modal"
                                 onClick={closeModal}
                                 variant="outlined"
                                 color="secondary"
@@ -68,6 +69,7 @@ const withUserMessages = (WrappedComponent) => (
                         <hr />
                         <div className="actions">
                             <Button
+                                data-testid="close-success-modal"
                                 onClick={closeModal}
                                 variant="outlined"
                                 color="secondary"
