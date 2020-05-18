@@ -4,7 +4,7 @@ import React from "react";
 
 const checkoutCases = () => describe("IntTests: Checkout cases", () => {
     it("Should fill checkout information", async () => {
-        const { queryAllByTestId, getByTestId, getAllByText, container } = render(<Index />);
+        const { getByTestId, getAllByText } = render(<Index />);
 
         const name = await waitForElement(() => document.getElementById('name-input'));
         const street = await waitForElement(() => document.getElementById('street-input'));

@@ -19,7 +19,7 @@ const UnorderedList = styled.ul`
 const Navigation = ({ isAuthenticated }) => (
     <UnorderedList>
         <NavigationItem link="/" exact >Burger Builder</NavigationItem>
-        {isAuthenticated && <NavigationItem link="/orders" >Orders</NavigationItem>}
+        {isAuthenticated && <NavigationItem link="/orders" id="orders" >Orders</NavigationItem>}
         {isAuthenticated
             ? <NavigationItem link="/logout" id="logout">Logout</NavigationItem>
             : <NavigationItem link="/auth" id="login">Login</NavigationItem>

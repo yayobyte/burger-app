@@ -102,6 +102,7 @@
       "<rootDir>/src"
     ],
     "coveragePathIgnorePatterns": [
+      "src/*.js",
       "src/__inttests__"
     ],
     "coverageThreshold": {

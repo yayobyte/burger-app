@@ -28,7 +28,7 @@ const Order = ({ customer, ingredients, price, orderId }) => (
         <Paper elevation={4} className="paper" >
             <Typography variant="subtitle1" color="secondary" align="center">{orderId}</Typography>
             <br />
-            <Typography className="title" variant="subtitle2">Ingredients: </Typography>
+            <Typography className="title" variant="subtitle2">Ingredients:</Typography>
             {ingredients &&
                 <List>
                     {Object.keys(ingredients).map(item => (
@@ -41,7 +41,7 @@ const Order = ({ customer, ingredients, price, orderId }) => (
                 </List>
             }
             <br />
-            <Typography className="title" variant="subtitle2">Address: </Typography>
+            <Typography className="title" variant="subtitle2">Address:</Typography>
             {customer &&
                 <List>
                     {Object.keys(customer).filter((item) => item !== "name").map((item) => (
