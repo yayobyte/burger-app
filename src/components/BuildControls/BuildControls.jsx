@@ -72,7 +72,9 @@ const BuildControls = ({
     ));
     return (
         <BuildControlsContainer>
-            <p className="price">Price: <strong>${price.toFixed(2)}</strong></p>
+            <p className="price">
+                Price: <strong data-testid="burger-builder-price">${price.toFixed(2)}</strong>
+            </p>
             {controls(ingredients).map((value) => (
                 <BuildControl
                     label={value.type}
@@ -83,6 +85,7 @@ const BuildControls = ({
                 />
             ))}
             <button
+                data-testid="order-button"
                 className="OrderButton"
                 disabled={!purchasable}
                 onClick={purchase}

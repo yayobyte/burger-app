@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Typography, Paper } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { secondaryColor } from "../../config/theme";
 
 const OrderContainer = styled.div`
     width: 80%;
