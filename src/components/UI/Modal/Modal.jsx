@@ -81,8 +81,7 @@ const ModalContainer = styled.div`
     }
 `;
 
-const Modal = ({ children, show, onCancel }) => {
-    const timing = 300;
+const Modal = ({ children, show, onCancel, timing = 300 }) => {
     const modalClasses = {
         enterActive: "modal-open",
         exitActive: "modal-close",

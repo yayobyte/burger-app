@@ -79,7 +79,7 @@ const withUserMessages = (WrappedComponent) => (
                         </div>
                     </ErrorContainer>
                 </Modal>
-                <Modal onCancel={() => null} show={loading}>
+                <Modal onCancel={() => null} show={loading} timing={100}>
                     <Spinner />
                 </Modal>
                 <WrappedComponent { ...props} />

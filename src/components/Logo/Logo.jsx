@@ -1,22 +1,18 @@
 import React from "react";
 import styled from 'styled-components';
-import BurgerLogo from '../../assets/images/burger-logo.png';
+import Avatar from '@material-ui/core/Avatar';
+import Person from '@material-ui/icons/Person';
 
 const Container = styled.div`
-  background-color: white;
-  padding: 8px;
   height: 100%;
   box-sizing: border-box;
-  border-radius: 5px;
-  
-  img {
-    height: 80%;
-  }
 `;
 
 const Logo = ({ className }) => (
     <Container className={className}>
-        <img src={BurgerLogo} alt="burger-logo"/>
+        <Avatar color="primary" >
+            <Person />
+        </Avatar>
     </Container>
 );
 
